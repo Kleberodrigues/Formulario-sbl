@@ -103,14 +103,21 @@ export const FORM_SUBMISSION_COLUMNS = {
 }
 
 /**
- * Steps do formulário
+ * Steps do formulário (atualizados após remover Chat)
  */
 export const FORM_STEPS = {
   WELCOME: 1,
-  CONTACT: 2,
-  CHAT: 3,
-  DEPOT: 4,
-  COMPLETION: 5
+  DEPOT: 2,
+  CONTACT: 3,
+  PERSONAL_INFO: 4,
+  ADDRESS_HISTORY: 5,
+  ADDITIONAL_INFO: 6,
+  PROFILE_PHOTO: 7,
+  DRIVING_LICENCE: 8,
+  BANK_DETAILS: 9,
+  DOCUMENT_GUIDE: 10,
+  DOCUMENTS_UPLOAD: 11,
+  COMPLETION: 12
 }
 
 /**
