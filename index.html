@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Silva Brothers Logistics - Formulário de Cadastro de Parceiros">
+  <meta name="keywords" content="SBL, logistics, delivery, partner registration">
+  <meta name="author" content="SinergIA (Kleber)">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SBL Onboarding - Silva Brothers Logistics">
+  <meta property="og:description" content="Complete seu cadastro para se tornar parceiro de entrega">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+
+  <title>SBL Onboarding - Silva Brothers Logistics</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/src/styles/global.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <link rel="stylesheet" href="/src/styles/responsive.css">
+</head>
+<body>
+  <!-- Container Principal -->
+  <div id="app">
+    <div class="app-container">
+      <!-- Header será injetado aqui -->
+      <div id="header-container"></div>
+
+      <!-- Progress Bar será injetado aqui -->
+      <div id="progress-container"></div>
+
+      <!-- Conteúdo do Step será injetado aqui -->
+      <div id="step-container"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- Carregar Supabase SDK do CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Disponibilizar Supabase globalmente para src/config/supabase.js
+    window.supabaseModule = supabase
+  </script>
+
+  <!-- Aplicação principal (type="module" para ES6 modules) -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

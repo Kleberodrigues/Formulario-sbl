@@ -1,0 +1,143 @@
+/**
+ * Configuração Supabase
+ * Integração com Supabase para SBL Onboarding Form
+ */
+
+// Importar Supabase (você precisará instalar: npm install @supabase/supabase-js)
+// import { createClient } from '@supabase/supabase-js'
+
+// Credenciais (use variáveis de ambiente em produção)
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://seu-project.supabase.co'
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sua-chave-anonima'
+
+/**
+ * Cliente Supabase
+ * Será inicializado quando a chave for fornecida
+ */
+let supabase = null
+
+/**
+ * Inicializar cliente Supabase
+ */
+export function initSupabase() {
+  if (typeof window === 'undefined') {
+    console.warn('Supabase apenas disponível no client')
+    return null
+  }
+
+  // Dinâmico para evitar erros em SSR
+  const { createClient } = window.supabaseModule || {}
+  
+  if (!createClient) {
+    console.error('Supabase não foi carregado. Adicione: npm install @supabase/supabase-js')
+    return null
+  }
+
+  if (!supabase) {
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  }
+  
+  return supabase
+}
+
+/**
+ * Obter instância do Supabase
+ */
+export function getSupabase() {
+  if (!supabase) {
+    console.warn('Supabase não inicializado. Chamando initSupabase()...')
+    return initSupabase()
+  }
+  return supabase
+}
+
+/**
+ * Obter URL base do Supabase
+ */
+export function getSupabaseUrl() {
+  return SUPABASE_URL
+}
+
+/**
+ * Verificar se Supabase está configurado
+ */
+export function isSupabaseConfigured() {
+  return SUPABASE_URL && SUPABASE_ANON_KEY && 
+         SUPABASE_URL !== 'https://seu-project.supabase.co' &&
+         SUPABASE_ANON_KEY !== 'sua-chave-anonima'
+}
+
+/**
+ * Schema das tabelas esperadas
+ */
+export const SUPABASE_SCHEMA = {
+  FORM_SUBMISSIONS: 'form_submissions',
+  FORM_ABANDONMENTS: 'form_abandonments'
+}
+
+/**
+ * Colunas da tabela form_submissions
+ */
+export const FORM_SUBMISSION_COLUMNS = {
+  ID: 'id',
+  EMAIL: 'email',
+  PHONE: 'phone',
+  LANGUAGE: 'language',
+  FULL_NAME: 'full_name',
+  SELECTED_DEPOT: 'selected_depot',
+  CURRENT_STEP: 'current_step',
+  COMPLETED_STEPS: 'completed_steps',
+  MESSAGES: 'messages',
+  CREATED_AT: 'created_at',
+  UPDATED_AT: 'updated_at',
+  COMPLETED_AT: 'completed_at',
+  ABANDONED_AT: 'abandoned_at',
+  IS_COMPLETED: 'is_completed',
+  IS_ABANDONED: 'is_abandoned',
+  LAST_ACTIVITY: 'last_activity',
+  USER_AGENT: 'user_agent',
+  IP_ADDRESS: 'ip_address',
+  UTM_SOURCE: 'utm_source',
+  UTM_MEDIUM: 'utm_medium',
+  UTM_CAMPAIGN: 'utm_campaign'
+}
+
+/**
+ * Steps do formulário
+ */
+export const FORM_STEPS = {
+  WELCOME: 1,
+  CONTACT: 2,
+  CHAT: 3,
+  DEPOT: 4,
+  COMPLETION: 5
+}
+
+/**
+ * Status do formulário
+ */
+export const FORM_STATUS = {
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed',
+  ABANDONED: 'abandoned'
+}
+
+/**
+ * Tipo de follow-up
+ */
+export const FOLLOWUP_TYPE = {
+  EMAIL: 'email',
+  WHATSAPP: 'whatsapp'
+}
+
+export default {
+  initSupabase,
+  getSupabase,
+  getSupabaseUrl,
+  isSupabaseConfigured,
+  SUPABASE_SCHEMA,
+  FORM_SUBMISSION_COLUMNS,
+  FORM_STEPS,
+  FORM_STATUS,
+  FOLLOWUP_TYPE
+}

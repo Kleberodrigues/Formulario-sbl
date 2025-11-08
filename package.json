@@ -1,0 +1,27 @@
+{
+  "name": "sbl-onboarding-form",
+  "version": "1.0.0",
+  "description": "Silva Brothers Logistics - Formulário de Cadastro de Parceiros",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview"
+  },
+  "keywords": [
+    "sbl",
+    "logistics",
+    "onboarding",
+    "form",
+    "multi-step"
+  ],
+  "author": "SinergIA (Kleber)",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

@@ -1,0 +1,257 @@
+/**
+ * Estilos Responsivos - SBL Onboarding Form
+ * Breakpoints: 320px (mobile), 768px (tablet), 1024px (desktop), 1440px (wide)
+ */
+
+/* ========== Mobile (320px - 767px) ========== */
+@media (max-width: 767px) {
+  #app {
+    padding: var(--spacing-sm);
+  }
+
+  .app-container {
+    border-radius: var(--border-radius);
+  }
+
+  .sbl-header {
+    padding: var(--spacing-sm);
+  }
+
+  .company-logo {
+    max-width: 150px;
+  }
+
+  .company-name {
+    font-size: var(--font-size-xl);
+  }
+
+  .form-step {
+    padding: var(--spacing-md);
+  }
+
+  .step-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .step-subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .welcome-description {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Language Selector */
+  .language-buttons {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+  }
+
+  .language-button {
+    padding: var(--spacing-sm);
+  }
+
+  .language-flag {
+    font-size: 24px;
+  }
+
+  /* Progress Bar */
+  .progress-bar-container {
+    padding: var(--spacing-sm);
+  }
+
+  .step-circle {
+    width: 28px;
+    height: 28px;
+    font-size: var(--font-size-xs);
+  }
+
+  /* Buttons */
+  .step-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    padding: var(--spacing-sm);
+  }
+
+  .btn-back {
+    order: 2;
+  }
+
+  .btn-continue {
+    order: 1;
+  }
+}
+
+/* ========== Tablet (768px - 1023px) ========== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #app {
+    max-width: 700px;
+  }
+
+  .company-logo {
+    max-width: 220px;
+  }
+
+  .language-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .step-title {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* ========== Desktop (1024px - 1439px) ========== */
+@media (min-width: 1024px) {
+  #app {
+    max-width: 800px;
+    padding: var(--spacing-lg);
+  }
+
+  .app-container {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .company-logo {
+    max-width: 250px;
+  }
+
+  .form-step {
+    padding: var(--spacing-xl);
+  }
+
+  .language-buttons {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .language-button {
+    padding: var(--spacing-lg);
+  }
+
+  .language-flag {
+    font-size: 40px;
+  }
+
+  .step-title {
+    font-size: 2.5rem;
+  }
+
+  .step-subtitle {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* ========== Wide (1440px+) ========== */
+@media (min-width: 1440px) {
+  #app {
+    max-width: 900px;
+  }
+
+  .form-step {
+    padding: var(--spacing-xl) 80px;
+  }
+}
+
+/* ========== Landscape Mobile ========== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .sbl-header {
+    padding: var(--spacing-xs);
+  }
+
+  .company-logo {
+    max-width: 120px;
+  }
+
+  .form-step {
+    padding: var(--spacing-sm);
+  }
+
+  .step-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .step-subtitle {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .progress-bar-container {
+    padding: var(--spacing-xs);
+  }
+
+  .language-buttons {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xs);
+  }
+
+  .language-button {
+    padding: var(--spacing-xs);
+  }
+
+  .language-flag {
+    font-size: 20px;
+    margin-bottom: 0;
+  }
+
+  .step-buttons {
+    padding-top: var(--spacing-sm);
+  }
+}
+
+/* ========== Print ========== */
+@media print {
+  body {
+    background: white;
+  }
+
+  #app {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .app-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .step-buttons {
+    display: none;
+  }
+
+  .progress-bar-container {
+    display: none;
+  }
+}
+
+/* ========== Dark Mode (Opcional) ========== */
+@media (prefers-color-scheme: dark) {
+  /* Futuramente: implementar dark mode */
+}
+
+/* ========== Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== High Contrast ========== */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    border: 2px solid black;
+  }
+
+  .language-button {
+    border: 2px solid var(--color-text);
+  }
+
+  .form-input {
+    border-width: 3px;
+  }
+}
