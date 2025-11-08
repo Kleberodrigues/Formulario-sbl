@@ -76,7 +76,18 @@ export async function upsertFormSubmission(email, formData) {
 export async function getFormProgress(email) {
   try {
     const supabase = getSupabase()
-    if (!supabase) throw new Error('Supabase não configurado')
+    if (!supabase) {
+      console.warn('⚠️ Supabase não configurado - buscando em localStorage')
+      
+      // Buscar do localStorage como fallback
+      const savedData = JSON.parse(localStorage.getItem('sbl_form_data') || '{}')
+      return {
+        email: savedData.email || email,
+        currentStep: savedData.currentStep || FORM_STEPS.WELCOME,
+        completedSteps: savedData.completedSteps || [],
+        isNew: !savedData.email
+      }
+    }
 
     const { data, error } = await supabase
       .from(SUPABASE_SCHEMA.FORM_SUBMISSIONS)
