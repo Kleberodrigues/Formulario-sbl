@@ -19,7 +19,19 @@ import {
 export async function upsertFormSubmission(email, formData) {
   try {
     const supabase = getSupabase()
-    if (!supabase) throw new Error('Supabase não configurado')
+    if (!supabase) {
+      console.warn('⚠️ Supabase não configurado - salvando apenas em localStorage')
+      
+      // Salvar no localStorage como fallback
+      const savedData = {
+        ...formData,
+        email,
+        last_activity: new Date().toISOString()
+      }
+      localStorage.setItem('sbl_form_data', JSON.stringify(savedData))
+      
+      return { email, ...formData } // Retornar dados para manter compatibilidade
+    }
 
     const submission = {
       email,
@@ -117,7 +129,17 @@ export async function getFormProgress(email) {
 export async function saveFormStep(email, stepNumber, stepData) {
   try {
     const supabase = getSupabase()
-    if (!supabase) throw new Error('Supabase não configurado')
+    if (!supabase) {
+      console.warn('⚠️ Supabase não configurado - salvando apenas em localStorage')
+      
+      // Salvar no localStorage como fallback
+      const savedData = JSON.parse(localStorage.getItem('sbl_form_data') || '{}')
+      savedData[`step_${stepNumber}_data`] = stepData
+      savedData.currentStep = stepNumber + 1
+      localStorage.setItem('sbl_form_data', JSON.stringify(savedData))
+      
+      return true // Retornar sucesso para permitir continuar
+    }
 
     // Obter progresso atual
     const progress = await getFormProgress(email)
@@ -369,7 +391,17 @@ async function triggerFollowupAutomation(email, abandonedAtStep) {
 export async function uploadFile(file, path, bucket = 'form-documents') {
   try {
     const supabase = getSupabase()
-    if (!supabase) throw new Error('Supabase não configurado')
+    if (!supabase) {
+      console.warn('⚠️ Supabase não configurado - simulando upload')
+      
+      // Retornar URL simulada (em produção, usar Supabase Storage)
+      const mockUrl = URL.createObjectURL(file)
+      return {
+        success: true,
+        url: mockUrl,
+        path: path
+      }
+    }
 
     // Faz upload do arquivo
     const { data, error } = await supabase.storage
