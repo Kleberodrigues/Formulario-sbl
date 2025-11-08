@@ -221,12 +221,33 @@ export const STORAGE_KEYS = {
   USER_EMAIL: 'sbl_user_email'
 }
 
-// Configuração de mapa (Mapbox)
+// Configuração de mapa (MapLibre GL JS com OpenStreetMap)
+// MapLibre é 100% gratuito e não requer API key! 🎉
 export const MAP_CONFIG = {
   DEFAULT_CENTER: [-1.4, 51.1], // UK center [lng, lat]
   DEFAULT_ZOOM: 6,
   MARKER_COLOR: COLORS.PRIMARY,
-  STYLE: 'mapbox://styles/mapbox/streets-v12',
+  // Estilo OpenStreetMap gratuito
+  // Usando estilo básico do OSM liberty
+  STYLE: {
+    version: 8,
+    sources: {
+      'osm': {
+        type: 'raster',
+        tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+        tileSize: 256,
+        attribution: '© OpenStreetMap contributors'
+      }
+    },
+    layers: [{
+      id: 'osm',
+      type: 'raster',
+      source: 'osm',
+      minzoom: 0,
+      maxzoom: 19
+    }]
+  },
+  // Mapbox token não é mais necessário (mantido para compatibilidade)
   MAPBOX_TOKEN: import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || ''
 }
 

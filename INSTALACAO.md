@@ -5,7 +5,7 @@
 - Node.js 16+ instalado
 - Git instalado
 - Conta no Supabase (https://app.supabase.com)
-- Conta no Mapbox (https://account.mapbox.com)
+- ~~Conta no Mapbox~~ ✅ NÃO É MAIS NECESSÁRIO! (usamos MapLibre gratuito)
 
 ---
 
@@ -60,14 +60,14 @@ cp .env.example .env.local
 #### **3.3 - Editar .env.local com suas credenciais:**
 
 ```env
-# SUPABASE
+# SUPABASE (OBRIGATÓRIO)
 VITE_SUPABASE_URL=https://SEU-PROJETO.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJ...sua-chave-aqui...
 
-# MAPBOX
-VITE_MAPBOX_ACCESS_TOKEN=pk.eyJ...seu-token-aqui...
+# MAPBOX/MAPLIBRE (NÃO É MAIS NECESSÁRIO - MapLibre é gratuito!)
+# VITE_MAPBOX_ACCESS_TOKEN=pk.eyJ...seu-token-aqui... (OPCIONAL)
 
-# N8N (opcional)
+# N8N (OPCIONAL)
 VITE_N8N_WEBHOOK_URL=https://seu-n8n.com/webhook/sbl
 ```
 
@@ -107,24 +107,16 @@ As políticas já estão no `migrations.sql`, mas verifique:
 
 ---
 
-## 🗺️ Configuração do Mapbox
+## 🗺️ ~~Configuração do Mapbox~~ ✅ NÃO É MAIS NECESSÁRIO!
 
-### **Passo 1: Criar Conta**
-1. Acesse https://account.mapbox.com
-2. Crie uma conta gratuita
+**Boa notícia!** O projeto agora usa **MapLibre GL JS** com tiles gratuitos do OpenStreetMap.
 
-### **Passo 2: Obter Token**
-1. Vá em: **Access Tokens**
-2. Copie o "Default public token"
-3. OU crie um novo token:
-   - Nome: "SBL Onboarding Form"
-   - Scopes: Deixe os padrões
-   - Click "Create token"
+**Você NÃO precisa mais:**
+- ❌ Criar conta no Mapbox
+- ❌ Obter token de API
+- ❌ Configurar credenciais
 
-### **Passo 3: Adicionar ao .env.local**
-```env
-VITE_MAPBOX_ACCESS_TOKEN=pk.eyJ1...seu-token-aqui...
-```
+**O mapa funciona 100% gratuito sem configuração!** 🎉
 
 ---
 
@@ -167,7 +159,7 @@ npm run preview
 - [ ] Dependências instaladas (`npm install`)
 - [ ] `.env.local` criado
 - [ ] Credenciais Supabase configuradas
-- [ ] Token Mapbox configurado
+- [x] ~~Token Mapbox~~ ✅ NÃO É MAIS NECESSÁRIO (MapLibre é gratuito!)
 - [ ] `migrations.sql` executado no Supabase
 - [ ] Bucket `form-documents` criado no Supabase Storage
 - [ ] Servidor rodando (`npm run dev`)
@@ -181,17 +173,20 @@ npm run preview
 - Verifique se as variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` estão corretas
 - Reinicie o servidor (`npm run dev`)
 
-### **Erro: "Mapbox access token not configured"**
-- Verifique se `VITE_MAPBOX_ACCESS_TOKEN` está no `.env.local`
-- Certifique-se de que o token começa com `pk.`
-- Reinicie o servidor
+### **~~Erro: "Mapbox access token not configured"~~**
+✅ **NÃO OCORRE MAIS!** MapLibre não precisa de token.
+
+### **Erro: "MapLibre GL JS not loaded"**
+- Execute: `npm install` para instalar `maplibre-gl`
+- Verifique se o arquivo `package.json` tem `maplibre-gl` nas dependências
+- Reinicie o servidor (`npm run dev`)
 
 ### **Erro: "No matching export uploadFile"**
 - Execute: `npm install` novamente
 - Verifique se o arquivo `src/services/supabaseService.js` tem a função `uploadFile` exportada
 
-### **Erro: "Cannot find module mapbox-gl"**
-- Execute: `npm install mapbox-gl`
+### **Erro: "Cannot find module maplibre-gl"**
+- Execute: `npm install maplibre-gl`
 
 ---
 

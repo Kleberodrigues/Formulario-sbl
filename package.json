@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
-    "mapbox-gl": "^3.0.0"
+    "maplibre-gl": "^4.0.0"
   },
   "devDependencies": {
     "vite": "^5.0.0"

@@ -1,13 +1,14 @@
 /**
- * Componente MapboxDepotSelector
- * Mapa interativo para seleção de depósito usando Mapbox GL JS
+ * Componente MapLibreDepotSelector
+ * Mapa interativo para seleção de depósito usando MapLibre GL JS
+ * MapLibre é um fork open-source do Mapbox GL JS - 100% gratuito
  */
 
 import { MAP_CONFIG, DEPOTS } from '../config/constants.js'
 import { t } from '../utils/translations.js'
 
-// Importar Mapbox será feito dinamicamente ou via CDN
-// import mapboxgl from 'mapbox-gl'
+// Importar MapLibre será feito dinamicamente ou via CDN
+// import maplibregl from 'maplibre-gl'
 
 /**
  * Criar mapa de seleção de depósito
@@ -28,9 +29,9 @@ export async function createMapboxDepotSelector(options) {
     selectedDepotId = null
   } = options
 
-  // Verificar se Mapbox GL JS está carregado
-  if (typeof mapboxgl === 'undefined') {
-    throw new Error('Mapbox GL JS not loaded. Please include the library in your HTML.')
+  // Verificar se MapLibre GL JS está carregado
+  if (typeof maplibregl === 'undefined') {
+    throw new Error('MapLibre GL JS not loaded. Please include the library in your HTML.')
   }
 
   const container = document.getElementById(containerId)
@@ -38,12 +39,7 @@ export async function createMapboxDepotSelector(options) {
     throw new Error(`Container with id "${containerId}" not found`)
   }
 
-  // Verificar token
-  if (!MAP_CONFIG.MAPBOX_TOKEN) {
-    throw new Error('Mapbox access token not configured. Set VITE_MAPBOX_ACCESS_TOKEN in .env')
-  }
-
-  mapboxgl.accessToken = MAP_CONFIG.MAPBOX_TOKEN
+  // MapLibre não precisa de token! 🎉
 
   // Criar container do mapa
   const mapContainer = document.createElement('div')
@@ -55,7 +51,7 @@ export async function createMapboxDepotSelector(options) {
   container.appendChild(mapContainer)
 
   // Inicializar mapa
-  const map = new mapboxgl.Map({
+  const map = new maplibregl.Map({
     container: mapContainer.id,
     style: MAP_CONFIG.STYLE,
     center: MAP_CONFIG.DEFAULT_CENTER,
@@ -63,7 +59,7 @@ export async function createMapboxDepotSelector(options) {
   })
 
   // Adicionar controles de navegação
-  map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+  map.addControl(new maplibregl.NavigationControl(), 'top-right')
 
   // Array para armazenar markers
   const markers = []
@@ -97,7 +93,7 @@ export async function createMapboxDepotSelector(options) {
     }
 
     // Criar popup
-    const popup = new mapboxgl.Popup({ offset: 25 })
+    const popup = new maplibregl.Popup({ offset: 25 })
       .setHTML(`
         <div class="depot-popup">
           <h4 class="depot-popup-title">${depot.name}</h4>
@@ -112,7 +108,7 @@ export async function createMapboxDepotSelector(options) {
       `)
 
     // Criar marker
-    const marker = new mapboxgl.Marker(el)
+    const marker = new maplibregl.Marker(el)
       .setLngLat([depot.coordinates.lng, depot.coordinates.lat])
       .setPopup(popup)
       .addTo(map)
@@ -291,15 +287,19 @@ export function createDepotList(options) {
 }
 
 /**
- * Verificar se Mapbox GL JS está disponível
+ * Verificar se MapLibre GL JS está disponível
  * @returns {boolean}
  */
-export function isMapboxAvailable() {
-  return typeof mapboxgl !== 'undefined' && !!MAP_CONFIG.MAPBOX_TOKEN
+export function isMapLibreAvailable() {
+  return typeof maplibregl !== 'undefined'
 }
+
+// Alias para compatibilidade
+export const isMapboxAvailable = isMapLibreAvailable
 
 export default {
   createMapboxDepotSelector,
   createDepotList,
-  isMapboxAvailable
+  isMapLibreAvailable,
+  isMapboxAvailable // mantido para compatibilidade
 }

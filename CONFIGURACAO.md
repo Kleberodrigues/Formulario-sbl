@@ -37,8 +37,9 @@ Edite o arquivo `.env.local` e adicione suas credenciais:
 VITE_SUPABASE_URL=https://lebmfeekwgcfbirzkuel.supabase.co
 VITE_SUPABASE_ANON_KEY=sua-chave-anon-do-supabase
 
-# MAPBOX (obtenha em: https://account.mapbox.com)
-VITE_MAPBOX_ACCESS_TOKEN=pk.seu-token-mapbox
+# MAPLIBRE/MAPA - NÃO É MAIS NECESSÁRIO! 🎉
+# O projeto usa MapLibre GL JS com tiles gratuitos do OpenStreetMap
+# VITE_MAPBOX_ACCESS_TOKEN=pk.seu-token-mapbox (OPCIONAL)
 
 # N8N (suas credenciais já configuradas)
 VITE_N8N_WEBHOOK_URL=https://heavydragonfly-n8n.cloudfy.cloud/webhook/formulario-sbl
@@ -46,14 +47,16 @@ VITE_N8N_WEBHOOK_URL=https://heavydragonfly-n8n.cloudfy.cloud/webhook/formulario
 
 ---
 
-## 🗺️ Obter Token Mapbox (OBRIGATÓRIO)
+## 🗺️ ~~Obter Token Mapbox~~ ✅ NÃO É MAIS NECESSÁRIO!
 
-O único que você precisa criar:
+**Boa notícia!** O projeto agora usa **MapLibre GL JS** gratuito.
 
-1. Acesse: https://account.mapbox.com
-2. Crie conta gratuita (leva 2 minutos)
-3. Copie o token (começa com `pk.`)
-4. Cole no `.env.local`
+**Você NÃO precisa mais:**
+- ❌ Criar conta no Mapbox
+- ❌ Obter token de API
+- ❌ Configurar credenciais de mapa
+
+**O mapa funciona 100% gratuito sem configuração!** 🎉
 
 ---
 
@@ -85,7 +88,7 @@ Acesse: http://localhost:3000
 - [ ] Repositório clonado
 - [ ] `npm install` executado
 - [ ] `.env.local` criado
-- [ ] Token Mapbox configurado
+- [x] ~~Token Mapbox~~ ✅ NÃO É MAIS NECESSÁRIO (MapLibre é gratuito!)
 - [ ] `migrations.sql` executado no Supabase
 - [ ] Bucket `form-documents` criado
 - [ ] Servidor rodando
