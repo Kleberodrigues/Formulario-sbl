@@ -92,17 +92,22 @@ export async function createMapboxDepotSelector(options) {
       selectedDepot = depot
     }
 
-    // Criar popup
-    const popup = new maplibregl.Popup({ offset: 25 })
+    // Criar popup com ID único
+    const popupId = `popup-${depot.id}`
+    const popup = new maplibregl.Popup({ offset: 25, closeButton: false })
       .setHTML(`
-        <div class="depot-popup">
-          <h4 class="depot-popup-title">${depot.name}</h4>
-          <p class="depot-popup-address">${depot.address}</p>
+        <div class="depot-popup" style="min-width: 200px;">
+          <h4 class="depot-popup-title" style="margin: 0 0 8px 0; color: #17A798; font-size: 16px;">${depot.name}</h4>
+          <p class="depot-popup-address" style="margin: 0 0 8px 0; color: #666; font-size: 12px;">${depot.address}</p>
+          ${depot.code ? `<p style="margin: 0 0 12px 0; color: #333; font-size: 11px; font-weight: 600;">Code: ${depot.code}</p>` : ''}
           <button
-            class="btn btn-primary btn-sm depot-select-btn"
+            class="depot-select-btn"
             data-depot-id="${depot.id}"
+            style="width: 100%; padding: 8px 16px; background: #17A798; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600;"
+            onmouseover="this.style.background='#148882'"
+            onmouseout="this.style.background='#17A798'"
           >
-            ${t(lang, 'depot.selectDepot')}
+            Selecionar
           </button>
         </div>
       `)
@@ -113,27 +118,42 @@ export async function createMapboxDepotSelector(options) {
       .setPopup(popup)
       .addTo(map)
 
-    markers.push({ marker, depot, el })
+    markers.push({ marker, depot, el, popup })
 
-    // Event listener para o marker
-    el.addEventListener('click', () => {
-      // Abrir popup
+    // Event listener para o marker - abre popup
+    el.addEventListener('click', (e) => {
+      e.stopPropagation()
+      // Fechar outros popups
+      markers.forEach(m => {
+        if (m.marker !== marker && m.marker.getPopup().isOpen()) {
+          m.marker.togglePopup()
+        }
+      })
+      // Abrir/fechar este popup
       marker.togglePopup()
     })
-  })
 
-  // Event delegation para botões de seleção nos popups
-  map.on('click', (e) => {
-    // Verificar se clicou em botão de seleção
-    const target = e.originalEvent.target
-    if (target.classList.contains('depot-select-btn')) {
-      const depotId = target.dataset.depotId
-      const depot = depots.find(d => d.id === depotId)
+    // Quando o popup abrir, adicionar event listener ao botão
+    popup.on('open', () => {
+      // Pequeno delay para garantir que o DOM foi atualizado
+      setTimeout(() => {
+        const btn = document.querySelector(`[data-depot-id="${depot.id}"]`)
+        if (btn) {
+          // Remover listener antigo se existir
+          const newBtn = btn.cloneNode(true)
+          btn.parentNode.replaceChild(newBtn, btn)
 
-      if (depot) {
-        selectDepot(depot)
-      }
-    }
+          // Adicionar novo listener
+          newBtn.addEventListener('click', (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            console.log('Depósito clicado:', depot.name)
+            selectDepot(depot)
+            marker.togglePopup()
+          })
+        }
+      }, 50)
+    })
   })
 
   /**
