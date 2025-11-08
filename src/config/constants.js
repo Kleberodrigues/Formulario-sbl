@@ -77,34 +77,352 @@ export const LANGUAGE_OPTIONS = [
 // Idioma padrão
 export const DEFAULT_LANGUAGE = LANGUAGES.PT_BR
 
-// Depósitos disponíveis
+// Depósitos disponíveis (organizados por categoria)
 export const DEPOTS = [
+  // Arrow_XL
   {
-    id: 'depot-1',
-    name: 'London Central',
-    address: '123 Main Street, London, UK',
+    id: 'arrow-xl-bristol',
+    name: 'Arrow XL - Bristol',
+    code: 'Arrow_XL',
+    address: 'Bristol, UK',
+    coordinates: { lat: 51.4545, lng: -2.5879 },
+    category: 'Arrow_XL'
+  },
+  {
+    id: 'arrow-xl-exeter',
+    name: 'Arrow XL - Exeter',
+    code: 'Arrow_XL',
+    address: 'Exeter, UK',
+    coordinates: { lat: 50.7184, lng: -3.5339 },
+    category: 'Arrow_XL'
+  },
+  {
+    id: 'arrow-xl-newcastle',
+    name: 'Arrow XL - Newcastle',
+    code: 'Arrow_XL',
+    address: 'Newcastle, UK',
+    coordinates: { lat: 54.9783, lng: -1.6178 },
+    category: 'Arrow_XL'
+  },
+  {
+    id: 'arrow-xl-southampton',
+    name: 'Arrow XL - Southampton',
+    code: 'Arrow_XL',
+    address: 'Southampton, UK',
+    coordinates: { lat: 50.9097, lng: -1.4044 },
+    category: 'Arrow_XL'
+  },
+  {
+    id: 'arrow-xl-swindon',
+    name: 'Arrow XL - Swindon',
+    code: 'Arrow_XL',
+    address: 'Swindon, UK',
+    coordinates: { lat: 51.5558, lng: -1.7797 },
+    category: 'Arrow_XL'
+  },
+
+  // Amazon
+  {
+    id: 'dxe1',
+    name: 'DXE1 (London - E3 3JG)',
+    code: 'DXE1',
+    address: 'London E3 3JG, UK',
+    coordinates: { lat: 51.5290, lng: -0.0263 },
+    category: 'Amazon'
+  },
+  {
+    id: 'drh1',
+    name: 'DRH1 (London - RH12 3GG)',
+    code: 'DRH1',
+    address: 'Horsham RH12 3GG, UK',
+    coordinates: { lat: 51.0630, lng: -0.3258 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dbh3',
+    name: 'DBH3 (Bournemouth - BH15 2AA)',
+    code: 'DBH3',
+    address: 'Bournemouth BH15 2AA, UK',
+    coordinates: { lat: 50.7489, lng: -1.9386 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dbn5',
+    name: 'DBN5 (Bognor Regis - PO22 9FJ)',
+    code: 'DBN5',
+    address: 'Bognor Regis PO22 9FJ, UK',
+    coordinates: { lat: 50.7826, lng: -0.6760 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dcr2',
+    name: 'DCR2 (Croydon - CR2 4UQ)',
+    code: 'DCR2',
+    address: 'Croydon CR2 4UQ, UK',
+    coordinates: { lat: 51.3518, lng: -0.0799 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dha2',
+    name: 'DHA2 (London - NW10 0UX)',
+    code: 'DHA2',
+    address: 'London NW10 0UX, UK',
+    coordinates: { lat: 51.5370, lng: -0.2708 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dpo1',
+    name: 'DPO1 (Portsmouth - PO9 2NG)',
+    code: 'DPO1',
+    address: 'Portsmouth PO9 2NG, UK',
+    coordinates: { lat: 50.8520, lng: -1.0982 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dsn1',
+    name: 'DSN1 (Swindon - SN3 4WA)',
+    code: 'DSN1',
+    address: 'Swindon SN3 4WA, UK',
+    coordinates: { lat: 51.5682, lng: -1.7897 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dig1',
+    name: 'DIG1 (Enfield - EN3 7PZ)',
+    code: 'DIG1',
+    address: 'Enfield EN3 7PZ, UK',
+    coordinates: { lat: 51.6622, lng: -0.0319 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dbr2',
+    name: 'DBR2 (Orpington - BR5 3RT)',
+    code: 'DBR2',
+    address: 'Orpington BR5 3RT, UK',
+    coordinates: { lat: 51.3779, lng: 0.0988 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dso2',
+    name: 'DSO2 (Southampton - SO40 9LR)',
+    code: 'DSO2',
+    address: 'Southampton SO40 9LR, UK',
+    coordinates: { lat: 50.8429, lng: -1.5339 },
+    category: 'Amazon'
+  },
+  {
+    id: 'dxw3',
+    name: 'DXW3 (Weybridge - KT14 0YU)',
+    code: 'DXW3',
+    address: 'Weybridge KT14 0YU, UK',
+    coordinates: { lat: 51.3614, lng: -0.4598 },
+    category: 'Amazon'
+  },
+
+  // Amazon_DE
+  {
+    id: 'dnw3',
+    name: 'DNW3',
+    code: 'DNW3',
+    address: 'UK',
     coordinates: { lat: 51.5074, lng: -0.1278 },
-    type: 'main',
-    phone: '+44 20 1234 5678',
-    hours: 'Mon-Fri: 8:00-18:00'
+    category: 'Amazon_DE'
+  },
+
+  // DX
+  {
+    id: 'dx-acton',
+    name: 'DX Acton',
+    code: 'DX',
+    address: 'Acton, London, UK',
+    coordinates: { lat: 51.5074, lng: -0.2683 },
+    category: 'DX'
   },
   {
-    id: 'depot-2',
-    name: 'Manchester North',
-    address: '456 North Road, Manchester, UK',
-    coordinates: { lat: 53.4808, lng: -2.2426 },
-    type: 'regional',
-    phone: '+44 161 123 4567',
-    hours: 'Mon-Fri: 9:00-17:00'
+    id: 'dx-crawley',
+    name: 'DX Crawley',
+    code: 'DX',
+    address: 'Crawley, UK',
+    coordinates: { lat: 51.1133, lng: -0.1863 },
+    category: 'DX'
   },
   {
-    id: 'depot-3',
-    name: 'Birmingham South',
-    address: '789 South Avenue, Birmingham, UK',
-    coordinates: { lat: 52.4862, lng: -1.8904 },
-    type: 'regional',
-    phone: '+44 121 234 5678',
-    hours: 'Mon-Fri: 9:00-17:00'
+    id: 'dx-dartford',
+    name: 'DX Dartford',
+    code: 'DX',
+    address: 'Dartford, UK',
+    coordinates: { lat: 51.4461, lng: 0.2190 },
+    category: 'DX'
+  },
+  {
+    id: 'dx-s-london',
+    name: 'DX S London',
+    code: 'DX',
+    address: 'South London, UK',
+    coordinates: { lat: 51.4236, lng: -0.1277 },
+    category: 'DX'
+  },
+  {
+    id: 'dx-middlesbrough',
+    name: 'DX Middlesbrough',
+    code: 'DX',
+    address: 'Middlesbrough, UK',
+    coordinates: { lat: 54.5742, lng: -1.2350 },
+    category: 'DX'
+  },
+
+  // FedEx
+  {
+    id: 'fedex-crawley',
+    name: 'FedEx Crawley',
+    code: 'FedEx',
+    address: 'Crawley, UK',
+    coordinates: { lat: 51.1133, lng: -0.1863 },
+    category: 'FedEx'
+  },
+  {
+    id: 'fedex-hornsey',
+    name: 'Fedex Hornsey',
+    code: 'FedEx',
+    address: 'Hornsey, London, UK',
+    coordinates: { lat: 51.5877, lng: -0.1166 },
+    category: 'FedEx'
+  },
+  {
+    id: 'fedex-park-royal',
+    name: 'Fedex Park Royal',
+    code: 'FedEx',
+    address: 'Park Royal, London, UK',
+    coordinates: { lat: 51.5284, lng: -0.2817 },
+    category: 'FedEx'
+  },
+  {
+    id: 'fedex-swindon',
+    name: 'FedEx Swindon',
+    code: 'FedEx',
+    address: 'Swindon, UK',
+    coordinates: { lat: 51.5558, lng: -1.7797 },
+    category: 'FedEx'
+  },
+  {
+    id: 'fedex-yates',
+    name: 'FedEx Yates',
+    code: 'FedEx',
+    address: 'UK',
+    coordinates: { lat: 51.5074, lng: -0.1278 },
+    category: 'FedEx'
+  },
+
+  // Amazon_XL
+  {
+    id: 'hig3',
+    name: 'HIG3',
+    code: 'HIG3',
+    address: 'UK',
+    coordinates: { lat: 51.5074, lng: -0.1278 },
+    category: 'Amazon_XL'
+  },
+  {
+    id: 'hne3',
+    name: 'HNE3',
+    code: 'HNE3',
+    address: 'UK',
+    coordinates: { lat: 51.5074, lng: -0.1278 },
+    category: 'Amazon_XL'
+  },
+  {
+    id: 'hnq1',
+    name: 'HNQ1',
+    code: 'HNQ1',
+    address: 'UK',
+    coordinates: { lat: 51.5074, lng: -0.1278 },
+    category: 'Amazon_XL'
+  },
+  {
+    id: 'hso2',
+    name: 'HSO2',
+    code: 'HSO2',
+    address: 'UK',
+    coordinates: { lat: 50.9097, lng: -1.4044 },
+    category: 'Amazon_XL'
+  },
+  {
+    id: 'hxw3',
+    name: 'HXW3',
+    code: 'HXW3',
+    address: 'UK',
+    coordinates: { lat: 51.3614, lng: -0.4598 },
+    category: 'Amazon_XL'
+  },
+
+  // SORTATION-CANDIDATES
+  {
+    id: 'sortation-candidates',
+    name: 'SORTATION-CANDIDATES',
+    code: 'SORTATION',
+    address: 'UK',
+    coordinates: { lat: 51.5074, lng: -0.1278 },
+    category: 'SORTATION-CANDIDATES'
+  },
+
+  // Hived
+  {
+    id: 'hived-hayes',
+    name: 'Hived Hayes',
+    code: 'Hived',
+    address: 'Hayes, London, UK',
+    coordinates: { lat: 51.5124, lng: -0.4198 },
+    category: 'Hived'
+  },
+
+  // UPS
+  {
+    id: 'ups-bristol',
+    name: 'UPS Bristol',
+    code: 'UPS',
+    address: 'Bristol, UK',
+    coordinates: { lat: 51.4545, lng: -2.5879 },
+    category: 'UPS'
+  },
+  {
+    id: 'ups-croydon',
+    name: 'UPS Croydon',
+    code: 'UPS',
+    address: 'Croydon, UK',
+    coordinates: { lat: 51.3762, lng: -0.0982 },
+    category: 'UPS'
+  },
+  {
+    id: 'ups-feltham',
+    name: 'UPS Feltham',
+    code: 'UPS',
+    address: 'Feltham, London, UK',
+    coordinates: { lat: 51.4491, lng: -0.4090 },
+    category: 'UPS'
+  },
+  {
+    id: 'ups-oxford',
+    name: 'UPS Oxford',
+    code: 'UPS',
+    address: 'Oxford, UK',
+    coordinates: { lat: 51.7520, lng: -1.2577 },
+    category: 'UPS'
+  },
+  {
+    id: 'ups-exeter',
+    name: 'UPS Exeter',
+    code: 'UPS',
+    address: 'Exeter, UK',
+    coordinates: { lat: 50.7184, lng: -3.5339 },
+    category: 'UPS'
+  },
+  {
+    id: 'ups-glastonbury',
+    name: 'UPS Glastonbury',
+    code: 'UPS',
+    address: 'Glastonbury, UK',
+    coordinates: { lat: 51.1489, lng: -2.7147 },
+    category: 'UPS'
   }
 ]
 

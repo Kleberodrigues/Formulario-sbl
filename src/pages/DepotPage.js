@@ -36,22 +36,13 @@ export function renderDepotPage(container, options = {}) {
         <div id="mapContainer" class="map-container" style="height: 400px; border-radius: 8px; overflow: hidden;"></div>
 
         <!-- Depot Info Card (Hidden until selection) -->
-        <div id="depotInfo" class="depot-info-card" style="display: none;">
+        <div id="depotInfo" class="depot-info-card" style="display: none; margin-top: 20px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
           <div class="depot-info-header">
-            <h3 id="depotName" class="depot-name"></h3>
-            <span id="depotBadge" class="depot-badge"></span>
+            <h3 id="depotName" class="depot-name" style="margin: 0 0 10px 0; color: #17A798;"></h3>
+            <span id="depotBadge" class="depot-badge" style="display: inline-block; padding: 4px 12px; background: #17A798; color: white; border-radius: 4px; font-size: 12px;"></span>
           </div>
-          <p id="depotAddress" class="depot-address"></p>
-          <div class="depot-details">
-            <div class="depot-detail">
-              <span class="detail-icon">📞</span>
-              <span id="depotPhone" class="detail-text"></span>
-            </div>
-            <div class="depot-detail">
-              <span class="detail-icon">🕒</span>
-              <span id="depotHours" class="detail-text"></span>
-            </div>
-          </div>
+          <p id="depotAddress" class="depot-address" style="margin: 10px 0; color: #666;"></p>
+          <p id="depotCode" class="depot-code" style="margin: 5px 0; color: #333; font-weight: 600;"></p>
         </div>
 
         <div class="form-actions">
@@ -71,8 +62,7 @@ export function renderDepotPage(container, options = {}) {
   const depotName = container.querySelector('#depotName')
   const depotBadge = container.querySelector('#depotBadge')
   const depotAddress = container.querySelector('#depotAddress')
-  const depotPhone = container.querySelector('#depotPhone')
-  const depotHours = container.querySelector('#depotHours')
+  const depotCode = container.querySelector('#depotCode')
   const backBtn = container.querySelector('#backBtn')
   const continueBtn = container.querySelector('#continueBtn')
 
@@ -89,12 +79,10 @@ export function renderDepotPage(container, options = {}) {
     selectedDepot = depot
 
     // Atualizar card de informações
-    depotName.textContent = t(lang, depot.nameKey) || depot.name
-    depotBadge.textContent = depot.type === 'main' ? t(lang, 'depot.mainDepot') : t(lang, 'depot.regionalDepot')
-    depotBadge.className = `depot-badge depot-badge-${depot.type}`
+    depotName.textContent = depot.name
+    depotBadge.textContent = depot.category || depot.code || 'Depot'
     depotAddress.textContent = depot.address
-    depotPhone.textContent = depot.phone
-    depotHours.textContent = depot.hours
+    depotCode.textContent = depot.code ? `Code: ${depot.code}` : ''
 
     // Mostrar card e habilitar botão
     depotInfoCard.style.display = 'block'
@@ -199,10 +187,8 @@ export function renderDepotPage(container, options = {}) {
     try {
       // Salvar no Supabase
       await saveFormStep(formData.email, 2, {
-        selected_depot: selectedDepot.id,
-        depot_name: selectedDepot.name,
-        depot_address: selectedDepot.address,
-        depot_type: selectedDepot.type
+        selected_depot: selectedDepot.name,
+        depot_code: selectedDepot.code || selectedDepot.id
       })
 
       // Limpar mapa antes de avançar
@@ -212,10 +198,10 @@ export function renderDepotPage(container, options = {}) {
 
       if (onNext) {
         onNext({
-          selectedDepot: selectedDepot.id,
+          selectedDepot: selectedDepot.name,
+          depotCode: selectedDepot.code || selectedDepot.id,
           depotAddress: selectedDepot.address,
-          depotName: selectedDepot.name,
-          depotType: selectedDepot.type
+          depotCategory: selectedDepot.category
         })
       }
     } catch (error) {
