@@ -23,20 +23,19 @@ export const COLORS = {
   WARNING: '#F39C12'        // Amarelo para avisos
 }
 
-// Steps do formulário (12 steps no total)
+// Steps do formulário (11 steps no total - removido Chat)
 export const STEPS = {
   WELCOME: 1,           // Boas-vindas + Seleção de idioma
-  DEPOT: 2,             // Seleção de depósito (Mapbox)
+  DEPOT: 2,             // Seleção de depósito (MapLibre)
   CONTACT: 3,           // Dados de contato (Nome, Email, Telefone)
-  CHAT: 4,              // Mensagem de chat
-  PERSONAL_INFO: 5,     // Informações pessoais (Data nascimento, mãe, parente)
-  ADDRESS_HISTORY: 6,   // Histórico de endereços (7 anos)
-  ADDITIONAL_INFO: 7,   // Informações adicionais (NI, UTR, VAT)
-  PROFILE_PHOTO: 8,     // Foto de perfil (selfie)
-  DRIVING_LICENCE: 9,   // Carteira de motorista (frente/verso)
-  BANK_DETAILS: 10,     // Dados bancários
-  DOCUMENT_GUIDE: 11,   // Guia de documentos (GDPR)
-  DOCUMENTS_UPLOAD: 12  // Upload de documentos (5 tipos)
+  PERSONAL_INFO: 4,     // Informações pessoais (Data nascimento, mãe, parente)
+  ADDRESS_HISTORY: 5,   // Histórico de endereços (7 anos)
+  ADDITIONAL_INFO: 6,   // Informações adicionais (NI, UTR, VAT)
+  PROFILE_PHOTO: 7,     // Foto de perfil (selfie)
+  DRIVING_LICENCE: 8,   // Carteira de motorista (frente/verso)
+  BANK_DETAILS: 9,      // Dados bancários
+  DOCUMENT_GUIDE: 10,   // Guia de documentos (GDPR)
+  DOCUMENTS_UPLOAD: 11  // Upload de documentos (5 tipos)
 }
 
 // Nomes dos steps para exibição
@@ -44,19 +43,18 @@ export const STEP_NAMES = {
   1: 'welcome',
   2: 'depot',
   3: 'contact',
-  4: 'chat',
-  5: 'personal_info',
-  6: 'address_history',
-  7: 'additional_info',
-  8: 'profile_photo',
-  9: 'driving_licence',
-  10: 'bank_details',
-  11: 'document_guide',
-  12: 'documents_upload'
+  4: 'personal_info',
+  5: 'address_history',
+  6: 'additional_info',
+  7: 'profile_photo',
+  8: 'driving_licence',
+  9: 'bank_details',
+  10: 'document_guide',
+  11: 'documents_upload'
 }
 
 // Total de steps (sem contar o step de boas-vindas)
-export const TOTAL_STEPS = 11
+export const TOTAL_STEPS = 10
 
 // Idiomas suportados
 export const LANGUAGES = {

@@ -170,7 +170,7 @@ export function renderBankDetailsPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 10, {
+      await saveFormStep(formData.email, 9, {
         bankAccountNumber: data.accountNumber, // Será encriptado no backend
         bankSortCode: data.sortCode, // Será encriptado no backend
         paymentDeclarationAccepted: true

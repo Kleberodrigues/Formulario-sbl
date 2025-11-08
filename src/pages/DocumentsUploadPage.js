@@ -173,7 +173,7 @@ export function renderDocumentsUploadPage(container, options = {}) {
       })
 
       // Salvar no Supabase
-      await saveFormStep(formData.email, 12, {
+      await saveFormStep(formData.email, 11, {
         documents: documentsState
       })
 
@@ -200,7 +200,7 @@ export function renderDocumentsUploadPage(container, options = {}) {
         onUpload: () => openUploadModal(docType, DOCUMENT_LABELS[docType])
       })
 
-      await saveFormStep(formData.email, 12, {
+      await saveFormStep(formData.email, 11, {
         documents: documentsState
       })
 
@@ -253,7 +253,7 @@ export function renderDocumentsUploadPage(container, options = {}) {
 
     try {
       // Marcar formulário como completo
-      await saveFormStep(formData.email, 12, {
+      await saveFormStep(formData.email, 11, {
         documents: documentsState,
         completed_at: new Date().toISOString(),
         is_completed: true

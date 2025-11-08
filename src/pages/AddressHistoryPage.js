@@ -98,7 +98,7 @@ export function renderAddressHistoryPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 6, {
+      await saveFormStep(formData.email, 5, {
         address_history: addresses
       })
 

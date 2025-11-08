@@ -216,7 +216,7 @@ export function renderAdditionalInfoPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 7, data)
+      await saveFormStep(formData.email, 6, data)
 
       if (onNext) {
         onNext(data)

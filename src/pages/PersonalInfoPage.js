@@ -200,7 +200,7 @@ export function renderPersonalInfoPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 5, data)
+      await saveFormStep(formData.email, 4, data)
 
       if (onNext) {
         onNext(data)

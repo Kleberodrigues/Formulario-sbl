@@ -143,7 +143,7 @@ export function renderDrivingLicencePage(container, options = {}) {
       }
 
       // Salvar URLs no banco
-      await saveFormStep(formData.email, 9, {
+      await saveFormStep(formData.email, 8, {
         drivingLicenceFrontUrl: frontUrl,
         drivingLicenceBackUrl: backUrl
       })

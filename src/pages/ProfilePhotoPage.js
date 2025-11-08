@@ -112,7 +112,7 @@ export function renderProfilePhotoPage(container, options = {}) {
       const photoUrl = uploadResult.url
 
       // Salvar URL no banco
-      await saveFormStep(formData.email, 8, {
+      await saveFormStep(formData.email, 7, {
         profilePhotoUrl: photoUrl
       })
 

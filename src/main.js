@@ -10,7 +10,6 @@ import { createProgressBar, updateProgressBar } from './components/ProgressBar.j
 import { createWelcomePage } from './pages/WelcomePage.js'
 import { renderDepotPage } from './pages/DepotPage.js'
 import { createContactPage } from './pages/ContactPage.js'
-import { renderChatPage } from './pages/ChatPage.js'
 import { renderPersonalInfoPage } from './pages/PersonalInfoPage.js'
 import { renderAddressHistoryPage } from './pages/AddressHistoryPage.js'
 import { renderAdditionalInfoPage } from './pages/AdditionalInfoPage.js'
@@ -111,10 +110,6 @@ function renderCurrentStep(container) {
 
     case STEPS.CONTACT:
       renderContactStep(container)
-      break
-
-    case STEPS.CHAT:
-      renderChatStep(container)
       break
 
     case STEPS.PERSONAL_INFO:
@@ -229,28 +224,6 @@ function renderDepotStep(container) {
 }
 
 /**
- * Renderizar Step de Chat
- * @param {HTMLElement} container - Container
- */
-function renderChatStep(container) {
-  renderChatPage(container, {
-    lang: appState.formData.language || 'pt-BR',
-    onNext: (data) => {
-      console.log('✅ Step 4 concluído:', data)
-
-      // Atualizar estado
-      appState.formData.messages = data.messages
-
-      goToNextStep()
-    },
-    onBack: () => {
-      goToPreviousStep()
-    },
-    formData: appState.formData
-  })
-}
-
-/**
  * Renderizar Step de Informações Pessoais
  * @param {HTMLElement} container - Container
  */
@@ -258,7 +231,7 @@ function renderPersonalInfoStep(container) {
   renderPersonalInfoPage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 5 concluído:', data)
+      console.log('✅ Step 4 concluído:', data)
 
       // Atualizar estado
       Object.assign(appState.formData, data)
@@ -280,7 +253,7 @@ function renderAddressHistoryStep(container) {
   renderAddressHistoryPage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 6 concluído:', data)
+      console.log('✅ Step 5 concluído:', data)
 
       // Atualizar estado
       appState.formData.addressHistory = data.addressHistory
@@ -302,7 +275,7 @@ function renderAdditionalInfoStep(container) {
   renderAdditionalInfoPage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 7 concluído:', data)
+      console.log('✅ Step 6 concluído:', data)
 
       // Atualizar estado
       Object.assign(appState.formData, data)
@@ -324,7 +297,7 @@ function renderProfilePhotoStep(container) {
   renderProfilePhotoPage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 8 concluído:', data)
+      console.log('✅ Step 7 concluído:', data)
 
       // Atualizar estado
       appState.formData.profilePhotoUrl = data.profilePhotoUrl
@@ -346,7 +319,7 @@ function renderDrivingLicenceStep(container) {
   renderDrivingLicencePage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 9 concluído:', data)
+      console.log('✅ Step 8 concluído:', data)
 
       // Atualizar estado
       appState.formData.drivingLicenceFrontUrl = data.drivingLicenceFrontUrl
@@ -369,7 +342,7 @@ function renderBankDetailsStep(container) {
   renderBankDetailsPage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 10 concluído:', data)
+      console.log('✅ Step 9 concluído:', data)
 
       // Atualizar estado
       appState.formData.bankAccountNumber = data.bankAccountNumber
@@ -392,7 +365,7 @@ function renderDocumentGuideStep(container) {
   renderDocumentGuidePage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: () => {
-      console.log('✅ Step 11 concluído')
+      console.log('✅ Step 10 concluído')
       goToNextStep()
     },
     onBack: () => {
@@ -410,7 +383,7 @@ function renderDocumentsUploadStep(container) {
   renderDocumentsUploadPage(container, {
     lang: appState.formData.language || 'pt-BR',
     onNext: (data) => {
-      console.log('✅ Step 12 concluído - Formulário completo!', data)
+      console.log('✅ Step 11 concluído - Formulário completo!', data)
 
       // Atualizar estado
       appState.formData.documents = data.documents
