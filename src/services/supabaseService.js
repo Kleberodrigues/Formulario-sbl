@@ -143,6 +143,38 @@ export async function saveFormStep(email, stepNumber, stepData) {
       updateData.messages = stepData.messages
     } else if (stepNumber === FORM_STEPS.DEPOT) {
       updateData.selected_depot = stepData.selectedDepot
+      updateData.depot_code = stepData.depot_code
+    } else if (stepNumber === 5) { // PERSONAL_INFO
+      updateData.birth_date = stepData.birthDate
+      updateData.birth_city = stepData.birthCity
+      updateData.mother_name = stepData.motherName
+      updateData.mother_surname = stepData.motherSurname
+      updateData.next_of_kin_name = stepData.nextOfKinName
+      updateData.next_of_kin_relationship = stepData.nextOfKinRelationship
+      updateData.next_of_kin_phone = stepData.nextOfKinPhone
+    } else if (stepNumber === 6) { // ADDRESS_HISTORY
+      updateData.address_history = stepData.address_history
+    } else if (stepNumber === 7) { // ADDITIONAL_INFO
+      updateData.national_insurance_number = stepData.nationalInsuranceNumber
+      updateData.utr_number = stepData.utrNumber
+      updateData.employment_status = stepData.employmentStatus
+      updateData.vat_number = stepData.vatNumber
+    } else if (stepNumber === 8) { // PROFILE_PHOTO
+      updateData.profile_photo_url = stepData.profilePhotoUrl
+      updateData.profile_photo_uploaded_at = new Date().toISOString()
+    } else if (stepNumber === 9) { // DRIVING_LICENCE
+      updateData.driving_licence_front_url = stepData.drivingLicenceFrontUrl
+      updateData.driving_licence_back_url = stepData.drivingLicenceBackUrl
+      updateData.driving_licence_uploaded_at = new Date().toISOString()
+    } else if (stepNumber === 10) { // BANK_DETAILS
+      updateData.bank_account_number = stepData.bankAccountNumber
+      updateData.bank_sort_code = stepData.bankSortCode
+      updateData.payment_declaration_accepted = stepData.paymentDeclarationAccepted
+      updateData.payment_declaration_accepted_at = new Date().toISOString()
+    } else if (stepNumber === 12) { // DOCUMENTS_UPLOAD
+      updateData.documents = stepData.documents
+      updateData.is_completed = true
+      updateData.completed_at = new Date().toISOString()
     }
 
     const { error } = await supabase

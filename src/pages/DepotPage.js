@@ -185,11 +185,20 @@ export function renderDepotPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      // Salvar no Supabase
-      await saveFormStep(formData.email, 2, {
-        selected_depot: selectedDepot.name,
-        depot_code: selectedDepot.code || selectedDepot.id
-      })
+      // Salvar no localStorage (Step 2 vem antes do email ser coletado no Step 3)
+      const savedData = JSON.parse(localStorage.getItem('sbl_form_data') || '{}')
+      const updatedData = {
+        ...savedData,
+        selectedDepot: selectedDepot.name,
+        depotCode: selectedDepot.code || selectedDepot.id,
+        depotAddress: selectedDepot.address,
+        depotCategory: selectedDepot.category,
+        currentStep: 2,
+        completedSteps: [...new Set([...(savedData.completedSteps || []), 2])]
+      }
+
+      localStorage.setItem('sbl_form_data', JSON.stringify(updatedData))
+      console.log('💾 Depósito salvo localmente:', selectedDepot.name)
 
       // Limpar mapa antes de avançar
       if (mapInstance && mapInstance.remove) {

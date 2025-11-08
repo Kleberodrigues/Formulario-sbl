@@ -147,7 +147,13 @@ export function renderDocumentsUploadPage(container, options = {}) {
       // Upload para Supabase Storage
       const filePath = `${STORAGE_CONFIG.PATHS.DOCUMENTS}/${formData.email}/${currentDocType}_${Date.now()}.${currentFile.name.split('.').pop()}`
 
-      const docUrl = await uploadFile(currentFile, filePath)
+      const uploadResult = await uploadFile(currentFile, filePath)
+
+      if (!uploadResult.success) {
+        throw new Error(uploadResult.error || 'Upload failed')
+      }
+
+      const docUrl = uploadResult.url
 
       // Atualizar estado
       documentsState[currentDocType] = {

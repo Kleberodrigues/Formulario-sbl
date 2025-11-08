@@ -171,10 +171,9 @@ export function renderBankDetailsPage(container, options = {}) {
 
     try {
       await saveFormStep(formData.email, 10, {
-        bank_account_number: data.accountNumber, // Será encriptado no backend
-        bank_sort_code: data.sortCode, // Será encriptado no backend
-        payment_declaration_accepted: true,
-        payment_declaration_accepted_at: new Date().toISOString()
+        bankAccountNumber: data.accountNumber, // Será encriptado no backend
+        bankSortCode: data.sortCode, // Será encriptado no backend
+        paymentDeclarationAccepted: true
       })
 
       if (onNext) {

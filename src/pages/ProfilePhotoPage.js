@@ -103,12 +103,17 @@ export function renderProfilePhotoPage(container, options = {}) {
       // Upload para Supabase Storage
       const filePath = `${STORAGE_CONFIG.PATHS.PROFILE_PHOTOS}/${formData.email}_${Date.now()}.${file.name.split('.').pop()}`
 
-      const photoUrl = await uploadFile(file, filePath)
+      const uploadResult = await uploadFile(file, filePath)
+
+      if (!uploadResult.success) {
+        throw new Error(uploadResult.error || 'Upload failed')
+      }
+
+      const photoUrl = uploadResult.url
 
       // Salvar URL no banco
       await saveFormStep(formData.email, 8, {
-        profile_photo_url: photoUrl,
-        profile_photo_uploaded_at: new Date().toISOString()
+        profilePhotoUrl: photoUrl
       })
 
       if (onNext) {

@@ -121,20 +121,31 @@ export function renderDrivingLicencePage(container, options = {}) {
       // Upload frente se houver novo arquivo
       if (frontFile) {
         const frontPath = `${STORAGE_CONFIG.PATHS.DRIVING_LICENCES}/${formData.email}_front_${Date.now()}.${frontFile.name.split('.').pop()}`
-        frontUrl = await uploadFile(frontFile, frontPath)
+        const frontResult = await uploadFile(frontFile, frontPath)
+
+        if (!frontResult.success) {
+          throw new Error(frontResult.error || 'Front upload failed')
+        }
+
+        frontUrl = frontResult.url
       }
 
       // Upload verso se houver novo arquivo
       if (backFile) {
         const backPath = `${STORAGE_CONFIG.PATHS.DRIVING_LICENCES}/${formData.email}_back_${Date.now()}.${backFile.name.split('.').pop()}`
-        backUrl = await uploadFile(backFile, backPath)
+        const backResult = await uploadFile(backFile, backPath)
+
+        if (!backResult.success) {
+          throw new Error(backResult.error || 'Back upload failed')
+        }
+
+        backUrl = backResult.url
       }
 
       // Salvar URLs no banco
       await saveFormStep(formData.email, 9, {
-        driving_licence_front_url: frontUrl,
-        driving_licence_back_url: backUrl,
-        driving_licence_uploaded_at: new Date().toISOString()
+        drivingLicenceFrontUrl: frontUrl,
+        drivingLicenceBackUrl: backUrl
       })
 
       if (onNext) {

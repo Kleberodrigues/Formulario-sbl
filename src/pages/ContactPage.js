@@ -224,22 +224,24 @@ export function createContactPage(initialData = {}, onContinue, onBack) {
         email: formState.email,
         phone: formState.phone,
         currentStep: STEPS.CONTACT,
-        completedSteps: [...(savedData.completedSteps || []), STEPS.CONTACT]
+        completedSteps: [...new Set([...(savedData.completedSteps || []), STEPS.CONTACT])]
       }
 
       localStorage.setItem('sbl_form_data', JSON.stringify(updatedData))
       console.log('💾 Dados de contato salvos localmente')
 
-      // Tentar salvar no Supabase
+      // Tentar salvar no Supabase (incluindo dados de steps anteriores)
       try {
         await upsertFormSubmission(formState.email, {
           fullName: formState.fullName,
           phone: formState.phone,
-          language: currentLanguage,
+          language: savedData.language || currentLanguage,
+          selectedDepot: savedData.selectedDepot,
+          depotCode: savedData.depotCode,
           currentStep: STEPS.CONTACT,
           completedSteps: updatedData.completedSteps
         })
-        console.log('✅ Dados salvos no Supabase')
+        console.log('✅ Dados salvos no Supabase (incluindo idioma e depot)')
       } catch (supabaseError) {
         console.warn('⚠️ Erro ao salvar no Supabase:', supabaseError.message)
         // Continuar mesmo se Supabase falhar (dados estão no localStorage)
