@@ -330,6 +330,120 @@ async function triggerFollowupAutomation(email, abandonedAtStep) {
 }
 
 /**
+ * Upload de arquivo para Supabase Storage
+ * @param {File} file - Arquivo a ser enviado
+ * @param {string} path - Caminho no storage (ex: 'profile-photos/user@email.com/photo.jpg')
+ * @param {string} bucket - Nome do bucket (padrão: 'form-documents')
+ * @returns {Promise<object>} - { success, url, error }
+ */
+export async function uploadFile(file, path, bucket = 'form-documents') {
+  try {
+    const supabase = getSupabase()
+    if (!supabase) throw new Error('Supabase não configurado')
+
+    // Faz upload do arquivo
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(path, file, {
+        cacheControl: '3600',
+        upsert: true // Sobrescreve se já existir
+      })
+
+    if (error) throw error
+
+    // Obtém URL pública do arquivo
+    const { data: urlData } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(path)
+
+    console.log(`✅ Arquivo enviado: ${path}`)
+
+    return {
+      success: true,
+      url: urlData.publicUrl,
+      path: data.path
+    }
+  } catch (error) {
+    console.error('❌ Erro ao fazer upload:', error.message)
+    return {
+      success: false,
+      error: error.message
+    }
+  }
+}
+
+/**
+ * Obtém URL pública de arquivo no Supabase Storage
+ * @param {string} path - Caminho do arquivo
+ * @param {string} bucket - Nome do bucket (padrão: 'form-documents')
+ * @returns {string} - URL pública
+ */
+export function getFileUrl(path, bucket = 'form-documents') {
+  try {
+    const supabase = getSupabase()
+    if (!supabase) throw new Error('Supabase não configurado')
+
+    const { data } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(path)
+
+    return data.publicUrl
+  } catch (error) {
+    console.error('❌ Erro ao obter URL:', error.message)
+    return null
+  }
+}
+
+/**
+ * Remove arquivo do Supabase Storage
+ * @param {string} path - Caminho do arquivo
+ * @param {string} bucket - Nome do bucket (padrão: 'form-documents')
+ * @returns {Promise<boolean>}
+ */
+export async function deleteFile(path, bucket = 'form-documents') {
+  try {
+    const supabase = getSupabase()
+    if (!supabase) throw new Error('Supabase não configurado')
+
+    const { error } = await supabase.storage
+      .from(bucket)
+      .remove([path])
+
+    if (error) throw error
+
+    console.log(`✅ Arquivo removido: ${path}`)
+    return true
+  } catch (error) {
+    console.error('❌ Erro ao remover arquivo:', error.message)
+    return false
+  }
+}
+
+/**
+ * Lista arquivos de um diretório no Storage
+ * @param {string} path - Caminho do diretório
+ * @param {string} bucket - Nome do bucket (padrão: 'form-documents')
+ * @returns {Promise<Array>}
+ */
+export async function listFiles(path = '', bucket = 'form-documents') {
+  try {
+    const supabase = getSupabase()
+    if (!supabase) throw new Error('Supabase não configurado')
+
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .list(path)
+
+    if (error) throw error
+
+    return data
+  } catch (error) {
+    console.error('❌ Erro ao listar arquivos:', error.message)
+    return []
+  }
+}
+
+/**
  * Obter IP do cliente
  */
 async function getClientIP() {
@@ -357,5 +471,9 @@ export default {
   markFormAsAbandoned,
   markFormAsCompleted,
   getAbandonmentsForFollowup,
-  markFollowupAsSent
+  markFollowupAsSent,
+  uploadFile,
+  getFileUrl,
+  deleteFile,
+  listFiles
 }
