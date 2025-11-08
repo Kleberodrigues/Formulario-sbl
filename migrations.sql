@@ -25,10 +25,7 @@ CREATE TABLE IF NOT EXISTS form_submissions (
   -- Step 3: Contact Information
   full_name VARCHAR(255),
 
-  -- Step 4: Chat Message
-  messages JSONB DEFAULT '[]'::jsonb,
-
-  -- Step 5: Personal Information
+  -- Step 4: Personal Information
   birth_date DATE,
   birth_city VARCHAR(100),
   mother_name VARCHAR(100),
@@ -37,33 +34,33 @@ CREATE TABLE IF NOT EXISTS form_submissions (
   next_of_kin_relationship VARCHAR(50),
   next_of_kin_phone VARCHAR(20),
 
-  -- Step 6: Address History (7 anos)
+  -- Step 5: Address History (7 anos)
   address_history JSONB DEFAULT '[]'::jsonb,
 
-  -- Step 7: Additional Information
+  -- Step 6: Additional Information
   national_insurance_number VARCHAR(20),
   utr_number VARCHAR(20),
   employment_status VARCHAR(100),
   vat_number VARCHAR(20),
 
-  -- Step 8: Profile Photo Selfie
+  -- Step 7: Profile Photo Selfie
   profile_photo_url TEXT,
   profile_photo_uploaded_at TIMESTAMP WITH TIME ZONE,
 
-  -- Step 9: Driving Licence Details
+  -- Step 8: Driving Licence Details
   driving_licence_front_url TEXT,
   driving_licence_back_url TEXT,
   driving_licence_uploaded_at TIMESTAMP WITH TIME ZONE,
 
-  -- Step 10: Bank Details (encrypted)
+  -- Step 9: Bank Details (encrypted)
   bank_account_number TEXT,
   bank_sort_code TEXT,
   payment_declaration_accepted BOOLEAN DEFAULT FALSE,
   payment_declaration_accepted_at TIMESTAMP WITH TIME ZONE,
 
-  -- Step 11: Document Guide (sem dados salvos)
+  -- Step 10: Document Guide (sem dados salvos)
 
-  -- Step 12: Documents Upload
+  -- Step 11: Documents Upload
   documents JSONB DEFAULT '{}'::jsonb,
 
   -- Progresso
