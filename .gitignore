@@ -45,3 +45,6 @@ coverage/
 *.tmp
 *.temp
 .cache/
+ 
+# Windows reserved filename artifact
+nul
