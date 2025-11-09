@@ -8,11 +8,13 @@ export const translations = {
   'pt-BR': {
     // Step 1 - Welcome
     welcome: {
-      title: 'Bem-vindo à Silva Brothers Logistics',
-      subtitle: 'Estamos felizes em tê-lo conosco!',
-      description: 'Complete seu cadastro em poucos passos simples.',
-      selectLanguage: 'Selecione seu idioma:',
-      continueButton: 'Continuar',
+      headerTitle: 'Bem-vindo à',
+      title: 'Silva Brothers Logistics LTD',
+      description: 'Obrigado por demonstrar interesse na Silva Brothers Logistics LTD. Tornar-se um parceiro de entrega ficou mais fácil.',
+      privacyText: 'Ao continuar, você concorda com nossa',
+      privacyLink: 'política de privacidade',
+      preferredLanguage: 'Idioma preferido',
+      continueButton: 'Prosseguir',
       loadingButton: 'Carregando...'
     },
 
@@ -20,6 +22,8 @@ export const translations = {
     depot: {
       title: 'Selecione seu Depósito',
       subtitle: 'Escolha o depósito mais próximo de você',
+      dropdownLabel: 'Onde você gostaria de se candidatar?',
+      dropdownPlaceholder: 'Selecione um depósito...',
       mainDepot: 'Principal',
       regionalDepot: 'Regional',
       selectDepot: 'Selecionar Depósito',
@@ -259,17 +263,21 @@ export const translations = {
   // English
   'en': {
     welcome: {
-      title: 'Welcome to Silva Brothers Logistics',
-      subtitle: 'We are happy to have you with us!',
-      description: 'Complete your registration in a few simple steps.',
-      selectLanguage: 'Select your language:',
-      continueButton: 'Continue',
+      headerTitle: 'Welcome to',
+      title: 'Silva Brothers Logistics LTD',
+      description: 'Thank you for showing interest in Silva Brothers Logistics LTD. Becoming a delivery partner has been easier.',
+      privacyText: 'By continuing, you agree with our',
+      privacyLink: 'privacy policy',
+      preferredLanguage: 'Preferred language',
+      continueButton: 'Proceed',
       loadingButton: 'Loading...'
     },
 
     depot: {
       title: 'Select Your Depot',
       subtitle: 'Choose the depot closest to you',
+      dropdownLabel: 'Where would you like to apply?',
+      dropdownPlaceholder: 'Select a depot...',
       mainDepot: 'Main',
       regionalDepot: 'Regional',
       selectDepot: 'Select Depot',
@@ -495,10 +503,12 @@ export const translations = {
   // Български (Bulgarian)
   'bg': {
     welcome: {
-      title: 'Добре дошли в Silva Brothers Logistics',
-      subtitle: 'Радваме се, че сте с нас!',
-      description: 'Попълнете регистрацията си в няколко прости стъпки.',
-      selectLanguage: 'Изберете вашия език:',
+      headerTitle: 'Добре дошли в',
+      title: 'Silva Brothers Logistics LTD',
+      description: 'Благодарим ви, че проявихте интерес към Silva Brothers Logistics LTD. Да станеш партньор за доставки стана по-лесно.',
+      privacyText: 'Продължавайки, вие се съгласявате с нашата',
+      privacyLink: 'политика за поверителност',
+      preferredLanguage: 'Предпочитан език',
       continueButton: 'Продължи',
       loadingButton: 'Зареждане...'
     },
@@ -506,6 +516,8 @@ export const translations = {
     depot: {
       title: 'Изберете вашия депо',
       subtitle: 'Изберете най-близкия до вас депо',
+      dropdownLabel: 'Къде бихте искали да кандидатствате?',
+      dropdownPlaceholder: 'Изберете депо...',
       mainDepot: 'Основен',
       regionalDepot: 'Регионален',
       selectDepot: 'Избери депо',
@@ -731,10 +743,12 @@ export const translations = {
   // Română (Romanian)
   'ro': {
     welcome: {
-      title: 'Bine ați venit la Silva Brothers Logistics',
-      subtitle: 'Ne bucurăm că sunteți cu noi!',
-      description: 'Completați înregistrarea în câțiva pași simpli.',
-      selectLanguage: 'Selectați limba dvs.:',
+      headerTitle: 'Bine ați venit la',
+      title: 'Silva Brothers Logistics LTD',
+      description: 'Vă mulțumim pentru interesul manifestat față de Silva Brothers Logistics LTD. Devine partener de livrare a devenit mai ușor.',
+      privacyText: 'Continuând, sunteți de acord cu',
+      privacyLink: 'politica noastră de confidențialitate',
+      preferredLanguage: 'Limba preferată',
       continueButton: 'Continuă',
       loadingButton: 'Se încarcă...'
     },
@@ -742,6 +756,8 @@ export const translations = {
     depot: {
       title: 'Selectați depozitul dvs.',
       subtitle: 'Alegeți depozitul cel mai apropiat de dvs.',
+      dropdownLabel: 'Unde ați dori să aplicați?',
+      dropdownPlaceholder: 'Selectați un depozit...',
       mainDepot: 'Principal',
       regionalDepot: 'Regional',
       selectDepot: 'Selectează depozitul',

@@ -83,10 +83,16 @@ function renderApp() {
   headerContainer.innerHTML = ''
   headerContainer.appendChild(header)
 
-  // Renderizar Progress Bar
-  const progressBar = createProgressBar(appState.currentStep)
-  progressContainer.innerHTML = ''
-  progressContainer.appendChild(progressBar)
+  // Renderizar Progress Bar (ocultar no Step 1 - Welcome)
+  if (appState.currentStep === STEPS.WELCOME) {
+    progressContainer.innerHTML = ''
+    progressContainer.style.display = 'none'
+  } else {
+    progressContainer.style.display = 'block'
+    const progressBar = createProgressBar(appState.currentStep)
+    progressContainer.innerHTML = ''
+    progressContainer.appendChild(progressBar)
+  }
 
   // Renderizar Step atual
   renderCurrentStep(stepContainer)

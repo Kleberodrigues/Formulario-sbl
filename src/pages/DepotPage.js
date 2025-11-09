@@ -5,6 +5,7 @@
 
 import { t } from '../utils/translations.js'
 import { createMapboxDepotSelector, createDepotList, isMapboxAvailable } from '../components/MapboxDepotSelector.js'
+import { createDepotDropdown, updateDepotDropdown } from '../components/DepotDropdown.js'
 import { saveFormStep } from '../services/supabaseService.js'
 import { DEPOTS } from '../config/constants.js'
 
@@ -21,7 +22,20 @@ export function renderDepotPage(container, options = {}) {
     formData = {}
   } = options
 
-  let selectedDepot = formData.selectedDepot || null
+  // Converter string para objeto depot se necessário
+  let selectedDepot = null
+  if (formData.selectedDepot) {
+    if (typeof formData.selectedDepot === 'string') {
+      // Se for string, procurar pelo nome
+      selectedDepot = DEPOTS.find(d => d.name === formData.selectedDepot)
+    } else if (formData.selectedDepot.id) {
+      // Se for objeto com ID, procurar pelo ID
+      selectedDepot = DEPOTS.find(d => d.id === formData.selectedDepot.id)
+    } else {
+      selectedDepot = formData.selectedDepot
+    }
+  }
+
   let mapInstance = null
 
   container.innerHTML = `
@@ -32,11 +46,14 @@ export function renderDepotPage(container, options = {}) {
       </div>
 
       <div class="form-content">
+        <!-- Dropdown Container -->
+        <div id="depotDropdownContainer"></div>
+
         <!-- Map Container -->
-        <div id="mapContainer" class="map-container" style="height: 400px; border-radius: 8px; overflow: hidden;"></div>
+        <div id="mapContainer" class="map-container"></div>
 
         <!-- Depot Info Card (Hidden until selection) -->
-        <div id="depotInfo" class="depot-info-card" style="display: none; margin-top: 20px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+        <div id="depotInfo" class="depot-info-card" style="display: none;">
           <div class="depot-info-header">
             <h3 id="depotName" class="depot-name" style="margin: 0 0 10px 0; color: #17A798;"></h3>
             <span id="depotBadge" class="depot-badge" style="display: inline-block; padding: 4px 12px; background: #17A798; color: white; border-radius: 4px; font-size: 12px;"></span>
@@ -58,6 +75,7 @@ export function renderDepotPage(container, options = {}) {
   `
 
   const mapContainer = container.querySelector('#mapContainer')
+  const depotDropdownContainer = container.querySelector('#depotDropdownContainer')
   const depotInfoCard = container.querySelector('#depotInfo')
   const depotName = container.querySelector('#depotName')
   const depotBadge = container.querySelector('#depotBadge')
@@ -87,7 +105,42 @@ export function renderDepotPage(container, options = {}) {
     // Mostrar card e habilitar botão
     depotInfoCard.style.display = 'block'
     continueBtn.disabled = false
+
+    // Sincronizar dropdown
+    updateDepotDropdown(depot.id)
   }
+
+  /**
+   * Função para zoom no mapa quando depot é selecionado via dropdown
+   */
+  const selectDepotOnMap = (depotId) => {
+    if (!mapInstance) return
+
+    const depot = DEPOTS.find(d => d.id === depotId)
+    if (!depot) return
+
+    // Zoom para o marker no mapa
+    if (depot.coordinates && mapInstance.flyTo) {
+      mapInstance.flyTo({
+        center: [depot.coordinates.lng, depot.coordinates.lat],
+        zoom: 12,
+        essential: true
+      })
+    }
+  }
+
+  // Criar dropdown de depósitos
+  const depotDropdown = createDepotDropdown({
+    lang,
+    selectedDepotId: selectedDepot?.id,
+    onDepotSelect: (depot) => {
+      console.log('Depot selecionado via dropdown:', depot)
+      updateDepotInfo(depot)
+      selectDepotOnMap(depot.id)
+    }
+  })
+
+  depotDropdownContainer.appendChild(depotDropdown)
 
   /**
    * Inicializar mapa ou lista

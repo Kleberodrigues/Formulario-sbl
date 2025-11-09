@@ -27,7 +27,6 @@ export function renderDocumentGuidePage(container, options = {}) {
       <div class="form-content">
         <!-- GDPR Info -->
         <div class="info-section">
-          <div class="info-icon">🔒</div>
           <h3 class="info-title">${t(lang, 'documentGuide.gdprTitle')}</h3>
           <p class="info-text">
             ${t(lang, 'documentGuide.gdprText')}
@@ -36,7 +35,6 @@ export function renderDocumentGuidePage(container, options = {}) {
 
         <!-- DPA Info -->
         <div class="info-section">
-          <div class="info-icon">⚖️</div>
           <h3 class="info-title">${t(lang, 'documentGuide.dpaTitle')}</h3>
           <p class="info-text">
             ${t(lang, 'documentGuide.dpaText')}
@@ -45,7 +43,6 @@ export function renderDocumentGuidePage(container, options = {}) {
 
         <!-- Required Documents -->
         <div class="info-section">
-          <div class="info-icon">📄</div>
           <h3 class="info-title">${t(lang, 'documentGuide.requiredDocs')}</h3>
           <ul class="document-checklist">
             <li class="checklist-item">
@@ -73,7 +70,6 @@ export function renderDocumentGuidePage(container, options = {}) {
 
         <!-- Important Notes -->
         <div class="info-section info-section-warning">
-          <div class="info-icon">⚠️</div>
           <h3 class="info-title">Important Notes</h3>
           <ul class="info-list">
             <li>All documents must be clear and readable</li>
@@ -82,15 +78,15 @@ export function renderDocumentGuidePage(container, options = {}) {
             <li>Maximum file size: 10MB per document</li>
           </ul>
         </div>
+      </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" id="backBtn">
-            ${t(lang, 'documentGuide.backButton')}
-          </button>
-          <button type="button" class="btn btn-primary" id="continueBtn">
-            ${t(lang, 'documentGuide.continueButton')}
-          </button>
-        </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" id="backBtn">
+          ${t(lang, 'documentGuide.backButton')}
+        </button>
+        <button type="button" class="btn btn-primary" id="continueBtn">
+          ${t(lang, 'documentGuide.continueButton')}
+        </button>
       </div>
     </div>
   `

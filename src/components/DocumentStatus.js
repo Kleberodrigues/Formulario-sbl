@@ -138,12 +138,12 @@ export function createDocumentCard(options) {
       ` : ''}
       ${status !== DOCUMENT_STATUS.PENDING && onView ? `
         <button type="button" class="btn btn-secondary btn-sm" data-action="view">
-          👁️ Ver
+          Ver
         </button>
       ` : ''}
       ${status !== DOCUMENT_STATUS.PENDING && onRemove ? `
         <button type="button" class="btn btn-danger btn-sm" data-action="remove">
-          🗑️ Remover
+          Remover
         </button>
       ` : ''}
     </div>

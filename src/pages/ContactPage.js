@@ -317,7 +317,12 @@ export function createContactPage(initialData = {}, onContinue, onBack) {
 
   // Montar o step
   const content = createContent()
-  container.appendChild(content)
+
+  // Criar wrapper scrollável para o conteúdo
+  const contentWrapper = document.createElement('div')
+  contentWrapper.className = 'form-content'
+  contentWrapper.appendChild(content)
+  container.appendChild(contentWrapper)
 
   const buttons = createStepButtons({
     showBack: true,
@@ -326,6 +331,9 @@ export function createContactPage(initialData = {}, onContinue, onBack) {
     onContinue: handleContinue,
     onBack: handleBack
   })
+
+  // Adicionar classe form-actions para consistência com outras páginas
+  buttons.classList.add('form-actions')
 
   container.appendChild(buttons)
 

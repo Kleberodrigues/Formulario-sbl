@@ -32,15 +32,15 @@ export function renderAddressHistoryPage(container, options = {}) {
 
       <div class="form-content">
         <div id="addressHistoryContainer"></div>
+      </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" id="backBtn">
-            ${t(lang, 'addressHistory.backButton')}
-          </button>
-          <button type="button" class="btn btn-primary" id="continueBtn">
-            ${t(lang, 'addressHistory.continueButton')}
-          </button>
-        </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" id="backBtn">
+          ${t(lang, 'addressHistory.backButton')}
+        </button>
+        <button type="button" class="btn btn-primary" id="continueBtn">
+          ${t(lang, 'addressHistory.continueButton')}
+        </button>
       </div>
     </div>
   `

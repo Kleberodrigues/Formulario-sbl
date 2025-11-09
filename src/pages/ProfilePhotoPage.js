@@ -33,15 +33,15 @@ export function renderProfilePhotoPage(container, options = {}) {
 
       <div class="form-content">
         <div id="photoUploadContainer"></div>
+      </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" id="backBtn">
-            ${t(lang, 'profilePhoto.backButton')}
-          </button>
-          <button type="button" class="btn btn-primary" id="continueBtn">
-            ${t(lang, 'profilePhoto.continueButton')}
-          </button>
-        </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" id="backBtn">
+          ${t(lang, 'profilePhoto.backButton')}
+        </button>
+        <button type="button" class="btn btn-primary" id="continueBtn">
+          ${t(lang, 'profilePhoto.continueButton')}
+        </button>
       </div>
     </div>
   `

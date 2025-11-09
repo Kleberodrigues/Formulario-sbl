@@ -6,13 +6,13 @@
 /* ========== Header (Design Original) ========== */
 .sbl-header {
   position: relative;
-  margin-bottom: 50px; /* Espaço para o logo circular */
+  margin-bottom: 60px; /* Espaço para o logo circular maior */
   flex-shrink: 0;
 }
 
 .header-gradient {
   background: var(--color-gradient);
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: 40px var(--spacing-md) 50px; /* Aumentado: 40px topo, 50px baixo */
   text-align: center;
   color: white;
   border-radius: 0;
@@ -21,7 +21,7 @@
 .header-label {
   font-size: 14px;
   font-weight: 400;
-  margin: 0 0 4px 0;
+  margin: 0 0 8px 0;
   opacity: 0.95;
 }
 
@@ -29,23 +29,23 @@
   font-size: 24px;
   font-weight: 700;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 .header-logo-circle {
   position: absolute;
   left: 50%;
-  bottom: -40px;
+  bottom: -50px; /* Ajustado para novo tamanho */
   transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
+  width: 100px; /* Aumentado de 80px */
+  height: 100px; /* Aumentado de 80px */
   background: white;
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 14px; /* Aumentado de 12px */
   z-index: 10;
 }
 
@@ -73,18 +73,18 @@
 
 /* ========== Language Selector ========== */
 .language-label {
-  margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+  margin: 10px 0 var(--spacing-sm) 0; /* Reduzido de 16px para 10px */
 }
 
 .language-label-text {
-  font-size: var(--font-size-base);
+  font-size: 15px; /* Reduzido de 16px */
   color: var(--color-text);
   font-weight: 500;
   text-align: center;
 }
 
 .language-selector {
-  margin: var(--spacing-md) 0;
+  margin: 12px 0; /* Reduzido de 16px para 12px */
 }
 
 .language-buttons {
@@ -146,7 +146,7 @@
 
 /* ========== Progress Bar (Versão Compacta) ========== */
 .progress-bar-container {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 8px var(--spacing-md); /* Reduzido de 12px para 8px */
   background: white;
   border-bottom: 1px solid var(--color-border);
 }
@@ -155,17 +155,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 4px; /* Reduzido de 6px para 4px */
 }
 
 .progress-text {
-  font-size: var(--font-size-sm);
+  font-size: 13px; /* Reduzido de 14px */
   color: var(--color-text-light);
   font-weight: 500;
 }
 
 .progress-percentage {
-  font-size: var(--font-size-sm);
+  font-size: 13px; /* Reduzido de 14px */
   color: var(--color-primary);
   font-weight: 600;
 }
@@ -227,24 +227,28 @@
 
 /* ========== Form Steps ========== */
 .form-step {
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 12px var(--spacing-lg); /* Reduzido padding vertical de 16px para 12px */
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Previne scroll no container principal */
+  max-height: 100%; /* Garante que não ultrapasse o viewport */
 }
 
 /* Form Page - usado nos steps 2-11 */
 .form-page {
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 12px var(--spacing-lg); /* Reduzido padding vertical de 16px para 12px */
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Previne scroll no container principal */
+  max-height: 100%; /* Garante que não ultrapasse o viewport */
 }
 
 .form-header {
   margin-bottom: var(--spacing-md);
   text-align: center;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Não comprime o header */
 }
 
 .form-title {
@@ -265,42 +269,277 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: auto; /* Permite scroll apenas no conteúdo quando necessário */
+  max-height: calc(100vh - 280px); /* Viewport - header (160px) - progress (40px) - padding (80px) */
+  min-height: 0; /* Permite flexbox shrink corretamente */
 }
 
 .form-actions {
   display: flex;
   gap: var(--spacing-sm);
   justify-content: space-between;
-  margin-top: var(--spacing-md);
+  margin-top: auto; /* Empurrar para o rodapé */
   padding-top: var(--spacing-md);
   border-top: 1px solid var(--color-border);
-  flex-shrink: 0;
+  flex-shrink: 0; /* Não comprimir */
 }
 
 .step-content {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 12px; /* Reduzido de 20px para 12px */
   text-align: center;
 }
 
 .step-title {
-  font-size: var(--font-size-xl);
+  font-size: 22px; /* Reduzido de 24px */
   color: var(--color-primary);
   font-weight: 700;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 10px; /* Reduzido de 12px para 10px */
 }
 
 .step-subtitle {
-  font-size: var(--font-size-base);
+  font-size: 15px; /* Reduzido de 16px */
   color: var(--color-text-light);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 12px; /* Reduzido de 16px para 12px */
 }
 
 .welcome-description {
-  font-size: var(--font-size-base);
+  font-size: 15px; /* Reduzido de 16px */
   color: var(--color-text);
-  margin-top: var(--spacing-sm);
+  margin-top: 8px; /* Reduzido de 12px para 8px */
+  line-height: 1.5; /* Reduzido de 1.6 */
+}
+
+/* ========== Welcome Page (Novo Layout) ========== */
+.welcome-content {
+  text-align: center;
+  padding: var(--spacing-md) 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.welcome-header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.welcome-header-title {
+  font-size: 20px;
+  color: var(--color-text);
+  font-weight: 400;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.welcome-main-title {
+  font-size: 24px;
+  color: var(--color-primary);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.welcome-description {
+  font-size: 15px;
+  color: var(--color-text-medium);
   line-height: 1.6;
+  margin: var(--spacing-lg) 0;
+  text-align: center;
+}
+
+.welcome-privacy {
+  margin: var(--spacing-md) 0;
+}
+
+.privacy-text-line {
+  font-size: 14px;
+  color: var(--color-text-medium);
+  margin: 0;
+  text-align: center;
+}
+
+.privacy-text {
+  color: var(--color-text-medium);
+}
+
+.privacy-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.privacy-link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* Dropdown de Idioma (Welcome Page) */
+.language-dropdown-container {
+  margin: var(--spacing-lg) 0;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.language-dropdown-label {
+  display: block;
+  font-size: 14px;
+  color: var(--color-text-medium);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 400;
+}
+
+.language-dropdown-select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: var(--color-text);
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+.language-dropdown-select:hover {
+  border-color: var(--color-primary);
+}
+
+.language-dropdown-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(29, 191, 175, 0.1);
+}
+
+/* Botão Proceed Centralizado */
+.welcome-content + .language-dropdown-container + .step-buttons {
+  justify-content: center;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome-content + .language-dropdown-container + .step-buttons .btn-continue {
+  min-width: 100%;
+}
+
+/* Depot Dropdown (reutiliza estilos do language dropdown) */
+.depot-dropdown-container {
+  margin: var(--spacing-lg) 0;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.depot-dropdown-label {
+  display: block;
+  font-size: 14px;
+  color: var(--color-text-medium);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 400;
+}
+
+.depot-dropdown-select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: var(--color-text);
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+.depot-dropdown-select:hover {
+  border-color: var(--color-primary);
+}
+
+.depot-dropdown-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(29, 191, 175, 0.1);
+}
+
+.depot-dropdown-select optgroup {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 13px;
+  padding: 8px 0;
+}
+
+.depot-dropdown-select option {
+  padding: 8px;
+  font-weight: 400;
+}
+
+/* ========== Depot Page (Step 2) ========== */
+.depot-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.depot-page .map-container {
+  height: 450px; /* Aumentado de 280px para melhor visualização */
+  max-height: 55vh; /* Aumentado de 35vh para 55% da viewport */
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border);
+  background: #f5f5f5;
+}
+
+.depot-info-card {
+  margin-top: 16px; /* Aumentado de 12px para melhor espaçamento */
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+}
+
+.depot-info-header {
+  margin-bottom: 10px;
+}
+
+.depot-name {
+  margin: 0 0 8px 0;
+  color: var(--color-primary);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.depot-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.depot-address {
+  margin: 8px 0;
+  color: var(--color-text-medium);
+  font-size: 14px;
+}
+
+.depot-code {
+  margin: 4px 0;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 14px;
 }
 
 /* ========== Form Fields ========== */
@@ -357,7 +596,7 @@
   display: flex;
   gap: var(--spacing-sm);
   margin-top: auto;
-  padding-top: var(--spacing-lg);
+  padding-top: 16px; /* Reduzido de 20px para 16px */
 }
 
 .btn {
@@ -600,7 +839,7 @@
 .file-upload-dropzone {
   border: 2px dashed var(--color-border);
   border-radius: var(--border-radius);
-  padding: var(--spacing-xl);
+  padding: var(--spacing-md); /* Reduzido de var(--spacing-xl) */
   text-align: center;
   background: var(--color-input);
   transition: all 0.3s ease;
@@ -609,6 +848,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-sm);
+  max-height: 250px; /* Limitar altura máxima */
 }
 
 .file-upload-dropzone:hover {
@@ -623,8 +863,8 @@
 }
 
 .file-upload-icon {
-  font-size: 48px;
-  margin-bottom: var(--spacing-sm);
+  font-size: 32px; /* Reduzido de 48px */
+  margin-bottom: var(--spacing-xs); /* Reduzido de var(--spacing-sm) */
 }
 
 .file-upload-text {
@@ -733,20 +973,23 @@
   text-align: center;
 }
 
-/* ========== Document Cards (Step 11) ========== */
+/* ========== Document Cards (Step 12 - Upload) ========== */
 .documents-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-md);
-  margin: var(--spacing-lg) 0;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Reduzido de 280px */
+  gap: 12px; /* Reduzido de 16px */
+  margin: 12px 0; /* Reduzido de 20px */
+  align-items: stretch; /* Forçar todos os cards a ter a mesma altura */
 }
 
 .document-card {
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
-  padding: var(--spacing-md);
+  padding: 12px; /* Reduzido de 16px */
   background: white;
   transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .document-card:hover {
@@ -758,19 +1001,20 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 10px; /* Reduzido de 16px */
 }
 
 .document-card-title {
-  font-size: var(--font-size-base);
+  font-size: 15px; /* Reduzido de 16px */
   color: var(--color-text);
   font-weight: 600;
   margin: 0;
   flex: 1;
+  line-height: 1.3;
 }
 
 .document-card-status {
-  margin-left: var(--spacing-sm);
+  margin-left: 8px; /* Reduzido de 12px */
 }
 
 .document-status {
@@ -784,17 +1028,18 @@
 }
 
 .document-card-body {
-  margin-bottom: var(--spacing-md);
-  min-height: 60px;
+  margin-bottom: 10px; /* Reduzido de 16px */
+  min-height: 40px; /* Reduzido de 60px */
+  flex: 1;
 }
 
 .document-card-file {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  background: var(--color-input);
-  border-radius: var(--border-radius);
+  gap: 8px; /* Reduzido de 12px */
+  padding: 10px; /* Reduzido de 12px */
+  background: var(--color-input-bg);
+  border-radius: var(--border-radius-sm);
 }
 
 .file-icon {
@@ -822,6 +1067,7 @@
   display: flex;
   gap: var(--spacing-xs);
   flex-wrap: wrap;
+  margin-top: auto;
 }
 
 .btn-sm {
@@ -854,15 +1100,75 @@
   }
 }
 
+/* ========== Document Guide Page ========== */
+.info-section {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: var(--color-input-bg);
+  border-radius: var(--border-radius-sm);
+}
+
+.info-section-warning {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+}
+
+.info-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 6px 0;
+}
+
+.info-text {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text-medium);
+  margin: 0;
+}
+
+.document-checklist,
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+}
+
+.checklist-item,
+.info-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.checklist-icon {
+  color: var(--color-success);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.checklist-item-optional .checklist-icon {
+  color: var(--color-text-light);
+}
+
+.checklist-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
 /* ========== Completion Page ========== */
 .completion-page {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
-  padding: var(--spacing-xl);
+  max-height: 100vh; /* Limitar altura à viewport */
+  overflow-y: auto; /* Permitir scroll quando necessário */
+  padding: var(--spacing-md); /* Reduzir padding */
 }
 
 .completion-container {
-  max-width: 800px;
+  max-width: 700px; /* Reduzir de 800px */
   margin: 0 auto;
   text-align: center;
 }

@@ -23,17 +23,23 @@ export function createWelcomePage(onContinue) {
   function updateTexts() {
     const lang = getSavedLanguage()
 
-    const title = container.querySelector('.step-title')
-    if (title) title.textContent = t(lang, 'welcome.title')
+    const headerTitle = container.querySelector('.welcome-header-title')
+    if (headerTitle) headerTitle.textContent = t(lang, 'welcome.headerTitle')
 
-    const subtitle = container.querySelector('.step-subtitle')
-    if (subtitle) subtitle.textContent = t(lang, 'welcome.subtitle')
+    const title = container.querySelector('.welcome-main-title')
+    if (title) title.textContent = t(lang, 'welcome.title')
 
     const description = container.querySelector('.welcome-description')
     if (description) description.textContent = t(lang, 'welcome.description')
 
-    const languageLabel = container.querySelector('.language-label-text')
-    if (languageLabel) languageLabel.textContent = t(lang, 'welcome.selectLanguage')
+    const privacyText = container.querySelector('.privacy-text')
+    if (privacyText) privacyText.textContent = t(lang, 'welcome.privacyText')
+
+    const privacyLink = container.querySelector('.privacy-link')
+    if (privacyLink) privacyLink.textContent = t(lang, 'welcome.privacyLink')
+
+    const languageLabel = container.querySelector('.language-dropdown-label')
+    if (languageLabel) languageLabel.textContent = t(lang, 'welcome.preferredLanguage')
 
     const continueButton = container.querySelector('.btn-continue')
     if (continueButton && !continueButton.classList.contains('loading')) {
@@ -41,35 +47,67 @@ export function createWelcomePage(onContinue) {
     }
   }
 
-  // Conteúdo do step
-  const content = createStepContent(
-    t(currentLanguage, 'welcome.title'),
-    t(currentLanguage, 'welcome.subtitle')
-  )
+  // Conteúdo personalizado (não usar createStepContent padrão)
+  const content = document.createElement('div')
+  content.className = 'welcome-content'
 
-  // Descrição adicional
-  const description = document.createElement('p')
-  description.className = 'welcome-description'
-  description.textContent = t(currentLanguage, 'welcome.description')
-  content.appendChild(description)
+  content.innerHTML = `
+    <div class="welcome-header">
+      <p class="welcome-header-title">${t(currentLanguage, 'welcome.headerTitle')}</p>
+      <h1 class="welcome-main-title">${t(currentLanguage, 'welcome.title')}</h1>
+    </div>
+
+    <p class="welcome-description">${t(currentLanguage, 'welcome.description')}</p>
+
+    <div class="welcome-privacy">
+      <p class="privacy-text-line">
+        <span class="privacy-text">${t(currentLanguage, 'welcome.privacyText')}</span>
+        <a href="#" class="privacy-link">${t(currentLanguage, 'welcome.privacyLink')}</a>.
+      </p>
+    </div>
+  `
 
   container.appendChild(content)
 
-  // Label do seletor de idioma
-  const languageLabel = document.createElement('div')
-  languageLabel.className = 'language-label'
-  languageLabel.innerHTML = `
-    <p class="language-label-text">${t(currentLanguage, 'welcome.selectLanguage')}</p>
-  `
-  container.appendChild(languageLabel)
+  // Dropdown de idioma
+  const languageDropdownContainer = document.createElement('div')
+  languageDropdownContainer.className = 'language-dropdown-container'
 
-  // Seletor de idioma
-  const languageSelector = createLanguageSelector((newLanguage) => {
-    currentLanguage = newLanguage
+  const languageDropdown = document.createElement('select')
+  languageDropdown.className = 'language-dropdown-select'
+  languageDropdown.id = 'language-select'
+
+  // Opções de idioma
+  const languages = [
+    { value: 'pt-BR', label: 'Português' },
+    { value: 'en', label: 'English' },
+    { value: 'bg', label: 'Български' },
+    { value: 'ro', label: 'Română' }
+  ]
+
+  languages.forEach(lang => {
+    const option = document.createElement('option')
+    option.value = lang.value
+    option.textContent = lang.label
+    if (lang.value === currentLanguage) {
+      option.selected = true
+    }
+    languageDropdown.appendChild(option)
+  })
+
+  // Event listener para mudança de idioma
+  languageDropdown.addEventListener('change', (e) => {
+    currentLanguage = e.target.value
+    localStorage.setItem('language', currentLanguage)
     updateTexts()
   })
 
-  container.appendChild(languageSelector)
+  languageDropdownContainer.innerHTML = `
+    <label for="language-select" class="language-dropdown-label">${t(currentLanguage, 'welcome.preferredLanguage')}</label>
+  `
+  languageDropdownContainer.appendChild(languageDropdown)
+
+  container.appendChild(languageDropdownContainer)
 
   // Botões de navegação
   const buttons = createStepButtons({

@@ -5,8 +5,47 @@
 
 /* ========== Mobile (320px - 767px) ========== */
 @media (max-width: 767px) {
+  /* Em mobile, permitir scroll se necessário */
+  #step-container {
+    overflow-y: auto;
+  }
+
+  /* Ajustar altura máxima do conteúdo para mobile */
+  .form-content {
+    max-height: calc(100vh - 240px); /* Reduzido para compensar header menor em mobile */
+  }
+
+  .depot-page .map-container {
+    height: 350px; /* Aumentado de 240px para melhor visualização em mobile */
+    max-height: 45vh; /* Aumentado de 30vh */
+  }
+
+  .documents-grid {
+    grid-template-columns: 1fr; /* Uma coluna em mobile */
+    gap: 10px;
+  }
+
   .sbl-header {
-    padding: var(--spacing-sm);
+    margin-bottom: 44px; /* Aumentado de 40px */
+  }
+
+  .header-gradient {
+    padding: 28px var(--spacing-md) 36px; /* Aumentado de 20px/26px */
+  }
+
+  .header-label {
+    font-size: 13px;
+    margin: 0 0 4px 0;
+  }
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .header-logo-circle {
+    width: 78px; /* Aumentado de 70px */
+    height: 78px; /* Aumentado de 70px */
+    bottom: -39px; /* Ajustado de -35px */
   }
 
   .company-logo {
@@ -22,15 +61,62 @@
   }
 
   .step-title {
-    font-size: var(--font-size-lg);
+    font-size: 20px;
   }
 
   .step-subtitle {
-    font-size: var(--font-size-sm);
+    font-size: 14px;
   }
 
   .welcome-description {
-    font-size: var(--font-size-sm);
+    font-size: 14px;
+  }
+
+  .step-content {
+    margin-bottom: 10px;
+  }
+
+  .language-label {
+    margin: 8px 0 var(--spacing-sm) 0;
+  }
+
+  .language-selector {
+    margin: 10px 0;
+  }
+
+  /* Welcome Page - Novo Layout */
+  .welcome-content {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .welcome-header-title {
+    font-size: 18px;
+  }
+
+  .welcome-main-title {
+    font-size: 20px;
+  }
+
+  .welcome-description {
+    font-size: 14px;
+    margin: var(--spacing-md) 0;
+  }
+
+  .privacy-text-line {
+    font-size: 13px;
+  }
+
+  .language-dropdown-container {
+    margin: var(--spacing-md) 0;
+  }
+
+  .language-dropdown-label {
+    font-size: 13px;
+  }
+
+  .language-dropdown-select {
+    padding: 10px 14px;
+    font-size: 14px;
   }
 
   /* Language Selector */
@@ -79,6 +165,27 @@
 
 /* ========== Tablet (768px - 1023px) ========== */
 @media (min-width: 768px) and (max-width: 1023px) {
+  /* Otimizar para caber na viewport sem scroll */
+  #app {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Ajustar altura máxima do conteúdo para tablet */
+  .form-content {
+    max-height: calc(100vh - 260px); /* Ajustado para compensar header tablet */
+  }
+
+  .depot-page .map-container {
+    height: 400px; /* Aumentado de 260px para melhor visualização em tablet */
+    max-height: 50vh; /* Aumentado de 32vh */
+  }
+
+  .documents-grid {
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas em tablet */
+    gap: 10px;
+  }
+
   .company-logo {
     max-width: 220px;
   }
@@ -88,12 +195,91 @@
   }
 
   .step-title {
-    font-size: var(--font-size-2xl);
+    font-size: 22px;
+  }
+
+  .step-subtitle {
+    font-size: 15px;
+  }
+
+  .welcome-description {
+    font-size: 15px;
+  }
+
+  /* Welcome Page - Novo Layout */
+  .welcome-header-title {
+    font-size: 19px;
+  }
+
+  .welcome-main-title {
+    font-size: 22px;
+  }
+
+  .language-dropdown-container {
+    max-width: 100%;
+    padding: 0 var(--spacing-md);
+  }
+
+  /* Ajustar header para tablet - Atualizado para novas proporções */
+  .header-gradient {
+    padding: 32px var(--spacing-md) 40px; /* Aumentado de 22px/28px */
+  }
+
+  .header-label {
+    font-size: 13px;
+  }
+
+  .header-title {
+    font-size: 20px;
+  }
+
+  .header-logo-circle {
+    width: 85px; /* Aumentado de 75px */
+    height: 85px; /* Aumentado de 75px */
+    bottom: -42px; /* Ajustado de -37px */
+  }
+
+  .sbl-header {
+    margin-bottom: 52px; /* Aumentado de 48px para compensar logo maior */
   }
 }
 
 /* ========== Desktop (1024px - 1439px) ========== */
 @media (min-width: 1024px) {
+  /* Garantir que conteúdo caiba na viewport */
+  #app {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Header Desktop - Atualizado para novas dimensões */
+  .header-gradient {
+    padding: 40px var(--spacing-md) 50px; /* Aumentado de 24px/30px */
+  }
+
+  .header-label {
+    font-size: 14px;
+  }
+
+  .header-title {
+    font-size: 22px;
+  }
+
+  .header-logo-circle {
+    width: 100px; /* Aumentado de 80px */
+    height: 100px; /* Aumentado de 80px */
+    bottom: -50px; /* Ajustado de -40px */
+  }
+
+  .sbl-header {
+    margin-bottom: 60px; /* Aumentado para compensar logo maior */
+  }
+
+  .depot-page .map-container {
+    height: 500px; /* Aumentado para desktop - melhor visualização */
+    max-height: 60vh; /* 60% da viewport em desktop */
+  }
+
   .company-logo {
     max-width: 250px;
   }
@@ -104,22 +290,40 @@
 
   .language-buttons {
     grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
   }
 
   .language-button {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
   }
 
   .language-flag {
-    font-size: 40px;
+    font-size: 36px;
   }
 
   .step-title {
-    font-size: 2.5rem;
+    font-size: 24px;
   }
 
   .step-subtitle {
-    font-size: var(--font-size-lg);
+    font-size: 16px;
+  }
+
+  .welcome-description {
+    font-size: 16px;
+  }
+
+  /* Welcome Page - Novo Layout */
+  .welcome-header-title {
+    font-size: 20px;
+  }
+
+  .welcome-main-title {
+    font-size: 26px;
+  }
+
+  .language-dropdown-container {
+    max-width: 500px;
   }
 }
 

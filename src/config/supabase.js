@@ -3,8 +3,7 @@
  * Integração com Supabase para SBL Onboarding Form
  */
 
-// Importar Supabase (você precisará instalar: npm install @supabase/supabase-js)
-// import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 
 // Credenciais (use variáveis de ambiente em produção)
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://seu-project.supabase.co'
@@ -25,18 +24,10 @@ export function initSupabase() {
     return null
   }
 
-  // Dinâmico para evitar erros em SSR
-  const { createClient } = window.supabaseModule || {}
-  
-  if (!createClient) {
-    console.error('Supabase não foi carregado. Adicione: npm install @supabase/supabase-js')
-    return null
-  }
-
   if (!supabase) {
     supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   }
-  
+
   return supabase
 }
 

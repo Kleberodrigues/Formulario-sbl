@@ -9,7 +9,9 @@
       "Bash(npm run dev:*)",
       "Bash(cat:*)",
       "Bash(timeout 10 npm run dev:*)",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(timeout /t 5)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []

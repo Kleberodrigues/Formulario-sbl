@@ -63,10 +63,9 @@ export function createCompletionPage(formData = {}) {
             </div>
 
             <div class="info-row">
-              <span class="info-icon">🏢</span>
               <div class="info-content">
                 <span class="info-label">${t(lang, 'completion.depotLabel')}</span>
-                <span class="info-value">${formData.depotName || t(lang, 'completion.notSpecified')}</span>
+                <span class="info-value">${formData.selectedDepot || t(lang, 'completion.notSpecified')}</span>
               </div>
             </div>
           </div>
@@ -75,7 +74,6 @@ export function createCompletionPage(formData = {}) {
         <!-- Next Steps -->
         <div class="next-steps-card">
           <h3 class="next-steps-title">
-            <span class="steps-icon">📋</span>
             ${t(lang, 'completion.nextStepsTitle')}
           </h3>
           <ul class="next-steps-list">
@@ -124,7 +122,6 @@ export function createCompletionPage(formData = {}) {
 
         <!-- Important Notice -->
         <div class="notice-card">
-          <div class="notice-icon">ℹ️</div>
           <div class="notice-content">
             <p class="notice-text">
               ${t(lang, 'completion.importantNotice')}
