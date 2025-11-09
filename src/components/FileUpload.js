@@ -40,9 +40,9 @@ export function createFileUpload(options) {
     <div class="file-upload-icon">📁</div>
     <p class="file-upload-text">${t(lang, 'profilePhoto.dragDrop')}</p>
     <p class="file-upload-or">${t(lang, 'profilePhoto.or')}</p>
-    <label for="${id}" class="file-upload-button">
-      ${t(lang, 'profilePhoto.selectFile')}
-    </label>
+    <button type="button" class="btn btn-primary file-upload-trigger-btn" data-upload-id="${id}">
+      📤 ${t(lang, 'profilePhoto.selectFile')}
+    </button>
     <p class="file-upload-info">
       ${t(lang, 'profilePhoto.maxSize')} | ${t(lang, 'profilePhoto.formats')}
     </p>
@@ -163,6 +163,16 @@ export function createFileUpload(options) {
       handleFileSelect(file)
     }
   })
+
+  // Event listener para botão de upload
+  const uploadBtn = dropZone.querySelector('.file-upload-trigger-btn')
+  if (uploadBtn) {
+    uploadBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      fileInput.click()
+    })
+  }
 
   // Drag & drop events
   dropZone.addEventListener('dragover', (e) => {

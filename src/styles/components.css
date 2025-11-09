@@ -503,3 +503,266 @@
     padding: var(--spacing-md);
   }
 }
+
+/* ========== File Upload Component ========== */
+.file-upload-container {
+  width: 100%;
+  margin: var(--spacing-md) 0;
+}
+
+.file-upload-dropzone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xl);
+  text-align: center;
+  background: var(--color-input);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.file-upload-dropzone:hover {
+  border-color: var(--color-primary);
+  background: white;
+}
+
+.file-upload-dropzone.file-upload-dragover {
+  border-color: var(--color-primary);
+  background: rgba(23, 167, 152, 0.05);
+  transform: scale(1.02);
+}
+
+.file-upload-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.file-upload-text {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.file-upload-or {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  margin: var(--spacing-xs) 0;
+}
+
+.file-upload-trigger-btn {
+  margin: var(--spacing-sm) 0;
+  min-width: 200px;
+}
+
+.file-upload-info {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  margin: var(--spacing-xs) 0 0 0;
+}
+
+.file-upload-input {
+  display: none !important;
+}
+
+/* File Preview */
+.file-upload-preview {
+  margin-top: var(--spacing-md);
+}
+
+.file-preview-wrapper {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: white;
+}
+
+.file-preview-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.file-preview-pdf {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.file-preview-icon {
+  font-size: 48px;
+}
+
+.file-preview-name {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.file-preview-size {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+}
+
+.file-preview-remove {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: rgba(231, 76, 60, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.file-preview-remove:hover {
+  background: var(--color-error);
+  transform: scale(1.1);
+}
+
+/* File Upload Error */
+.file-upload-error {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid var(--color-error);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-sm);
+  text-align: center;
+}
+
+/* ========== Document Cards (Step 11) ========== */
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  margin: var(--spacing-lg) 0;
+}
+
+.document-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.document-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.document-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.document-card-title {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.document-card-status {
+  margin-left: var(--spacing-sm);
+}
+
+.document-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.document-card-body {
+  margin-bottom: var(--spacing-md);
+  min-height: 60px;
+}
+
+.document-card-file {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-input);
+  border-radius: var(--border-radius);
+}
+
+.file-icon {
+  font-size: 24px;
+}
+
+.file-info {
+  flex: 1;
+}
+
+.file-name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.file-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  margin-top: 2px;
+}
+
+.document-card-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.btn-danger {
+  background: var(--color-error);
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .documents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-upload-icon {
+    font-size: 36px;
+  }
+
+  .file-upload-trigger-btn {
+    min-width: 160px;
+  }
+}
