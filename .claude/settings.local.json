@@ -11,7 +11,9 @@
       "Bash(timeout 10 npm run dev:*)",
       "Bash(git rev-parse:*)",
       "Bash(timeout /t 5)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(ping:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

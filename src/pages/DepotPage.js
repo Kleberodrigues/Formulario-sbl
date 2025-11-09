@@ -40,17 +40,12 @@ export function renderDepotPage(container, options = {}) {
 
   container.innerHTML = `
     <div class="form-page depot-page">
-      <div class="form-header">
-        <h2 class="form-title">${t(lang, 'depot.title')}</h2>
-        <p class="form-subtitle">${t(lang, 'depot.subtitle')}</p>
-      </div>
-
       <div class="form-content">
-        <!-- Dropdown Container -->
-        <div id="depotDropdownContainer"></div>
-
-        <!-- Map Container -->
+        <!-- Map Container (PRIMEIRO - como na referência) -->
         <div id="mapContainer" class="map-container"></div>
+
+        <!-- Dropdown Container (ABAIXO do mapa) -->
+        <div id="depotDropdownContainer"></div>
 
         <!-- Depot Info Card (Hidden until selection) -->
         <div id="depotInfo" class="depot-info-card" style="display: none;">
@@ -61,15 +56,13 @@ export function renderDepotPage(container, options = {}) {
           <p id="depotAddress" class="depot-address" style="margin: 10px 0; color: #666;"></p>
           <p id="depotCode" class="depot-code" style="margin: 5px 0; color: #333; font-weight: 600;"></p>
         </div>
+      </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" id="backBtn">
-            ${t(lang, 'depot.backButton')}
-          </button>
-          <button type="button" class="btn btn-primary" id="continueBtn" disabled>
-            ${t(lang, 'depot.continueButton')}
-          </button>
-        </div>
+      <!-- Botão Proceed centralizado (como na referência) -->
+      <div class="form-actions" style="justify-content: center;">
+        <button type="button" class="btn btn-primary" id="proceedBtn" disabled style="min-width: 500px;">
+          Proceed
+        </button>
       </div>
     </div>
   `
@@ -81,8 +74,7 @@ export function renderDepotPage(container, options = {}) {
   const depotBadge = container.querySelector('#depotBadge')
   const depotAddress = container.querySelector('#depotAddress')
   const depotCode = container.querySelector('#depotCode')
-  const backBtn = container.querySelector('#backBtn')
-  const continueBtn = container.querySelector('#continueBtn')
+  const proceedBtn = container.querySelector('#proceedBtn')
 
   /**
    * Atualizar informações do depósito selecionado
@@ -90,7 +82,7 @@ export function renderDepotPage(container, options = {}) {
   const updateDepotInfo = (depot) => {
     if (!depot) {
       depotInfoCard.style.display = 'none'
-      continueBtn.disabled = true
+      proceedBtn.disabled = true
       return
     }
 
@@ -104,14 +96,15 @@ export function renderDepotPage(container, options = {}) {
 
     // Mostrar card e habilitar botão
     depotInfoCard.style.display = 'block'
-    continueBtn.disabled = false
+    proceedBtn.disabled = false
 
     // Sincronizar dropdown
     updateDepotDropdown(depot.id)
   }
 
   /**
-   * Função para zoom no mapa quando depot é selecionado via dropdown
+   * Função para destacar depot no mapa sem fazer zoom
+   * (mantém visualização geral de todos os depósitos)
    */
   const selectDepotOnMap = (depotId) => {
     if (!mapInstance) return
@@ -119,14 +112,8 @@ export function renderDepotPage(container, options = {}) {
     const depot = DEPOTS.find(d => d.id === depotId)
     if (!depot) return
 
-    // Zoom para o marker no mapa
-    if (depot.coordinates && mapInstance.flyTo) {
-      mapInstance.flyTo({
-        center: [depot.coordinates.lng, depot.coordinates.lat],
-        zoom: 12,
-        essential: true
-      })
-    }
+    // Nota: NÃO fazemos flyTo/zoom para manter a visualização geral do mapa
+    // O mapa continua mostrando todos os depósitos, como na interface de referência
   }
 
   // Criar dropdown de depósitos
@@ -218,24 +205,15 @@ export function renderDepotPage(container, options = {}) {
   // Inicializar seletor
   initializeDepotSelector()
 
-  // Event listeners
-  backBtn.addEventListener('click', () => {
-    // Limpar mapa se houver
-    if (mapInstance && mapInstance.remove) {
-      mapInstance.remove()
-    }
-
-    if (onBack) onBack()
-  })
-
-  continueBtn.addEventListener('click', async () => {
+  // Event listener para botão Proceed
+  proceedBtn.addEventListener('click', async () => {
     if (!selectedDepot) {
       alert(t(lang, 'validation.required'))
       return
     }
 
-    continueBtn.disabled = true
-    continueBtn.textContent = t(lang, 'system.saving')
+    proceedBtn.disabled = true
+    proceedBtn.textContent = t(lang, 'system.saving')
 
     try {
       // Salvar no localStorage (Step 2 vem antes do email ser coletado no Step 3)
@@ -269,8 +247,8 @@ export function renderDepotPage(container, options = {}) {
     } catch (error) {
       console.error('Erro ao salvar depósito:', error)
       alert(t(lang, 'system.error'))
-      continueBtn.disabled = false
-      continueBtn.textContent = t(lang, 'depot.continueButton')
+      proceedBtn.disabled = false
+      proceedBtn.textContent = 'Proceed'
     }
   })
 }

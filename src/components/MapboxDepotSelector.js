@@ -46,7 +46,7 @@ export async function createMapboxDepotSelector(options) {
   mapContainer.id = `${containerId}-map`
   mapContainer.className = 'mapbox-map-container'
   mapContainer.style.width = '100%'
-  mapContainer.style.height = '500px'
+  mapContainer.style.height = '100%' // Herda altura do container pai via CSS
 
   container.appendChild(mapContainer)
 
@@ -94,11 +94,15 @@ export async function createMapboxDepotSelector(options) {
 
     // Criar popup com ID único
     const popupId = `popup-${depot.id}`
-    const popup = new maplibregl.Popup({ offset: 25, closeButton: false })
+    const popup = new maplibregl.Popup({
+      offset: 25,
+      closeButton: false,
+      maxWidth: '300px' // Largura máxima para evitar popups muito largos
+    })
       .setHTML(`
-        <div class="depot-popup" style="min-width: 200px;">
-          <h4 class="depot-popup-title" style="margin: 0 0 8px 0; color: #17A798; font-size: 16px;">${depot.name}</h4>
-          <p class="depot-popup-address" style="margin: 0 0 8px 0; color: #666; font-size: 12px;">${depot.address}</p>
+        <div class="depot-popup" style="min-width: 250px; max-width: 300px;">
+          <h4 class="depot-popup-title" style="margin: 0 0 8px 0; color: #17A798; font-size: 16px; word-wrap: break-word; line-height: 1.3;">${depot.name}</h4>
+          <p class="depot-popup-address" style="margin: 0 0 8px 0; color: #666; font-size: 12px; word-wrap: break-word; line-height: 1.4;">${depot.address}</p>
           ${depot.code ? `<p style="margin: 0 0 12px 0; color: #333; font-size: 11px; font-weight: 600;">Code: ${depot.code}</p>` : ''}
           <button
             class="depot-select-btn"
@@ -187,12 +191,13 @@ export async function createMapboxDepotSelector(options) {
       onDepotSelect(depot)
     }
 
-    // Centralizar mapa no depósito
-    map.flyTo({
-      center: [depot.coordinates.lng, depot.coordinates.lat],
-      zoom: 12,
-      essential: true
-    })
+    // Não fazer zoom - manter visualização geral de todos os depósitos
+    // (comentado para manter o mapa fixo sem mudança de tamanho)
+    // map.flyTo({
+    //   center: [depot.coordinates.lng, depot.coordinates.lat],
+    //   zoom: 12,
+    //   essential: true
+    // })
   }
 
   /**

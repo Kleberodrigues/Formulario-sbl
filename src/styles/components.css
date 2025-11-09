@@ -429,7 +429,7 @@
 
 /* Depot Dropdown (reutiliza estilos do language dropdown) */
 .depot-dropdown-container {
-  margin: var(--spacing-lg) 0;
+  margin: var(--spacing-lg) var(--spacing-md);
   text-align: left;
   max-width: 600px;
   margin-left: auto;
@@ -491,21 +491,40 @@
 }
 
 .depot-page .map-container {
-  height: 450px; /* Aumentado de 280px para melhor visualização */
-  max-height: 55vh; /* Aumentado de 35vh para 55% da viewport */
-  border-radius: var(--border-radius);
+  height: 300px !important; /* Altura fixa - não pode mudar */
+  min-height: 300px; /* Altura mínima garantida */
+  width: 100%;
+  max-width: 800px; /* Largura máxima para centralizar */
+  margin: 0 auto; /* Centralizar */
+  border-radius: var(--border-radius); /* Bordas arredondadas */
   overflow: hidden;
-  margin-bottom: 12px;
   border: 1px solid var(--color-border);
   background: #f5f5f5;
+  flex-shrink: 0; /* NÃO encolher quando outros elementos aparecem */
+}
+
+/* Container interno do MapLibre - preenche o pai */
+.mapbox-map-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative; /* Garante que o mapa se posicione corretamente */
+}
+
+/* Canvas do mapa - garante tamanho correto */
+.mapbox-map-container canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .depot-info-card {
-  margin-top: 16px; /* Aumentado de 12px para melhor espaçamento */
+  margin: 16px var(--spacing-md); /* Margem lateral para não colar nas bordas */
   padding: 16px;
   background: #f5f5f5;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .depot-info-header {

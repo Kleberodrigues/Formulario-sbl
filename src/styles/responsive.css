@@ -16,8 +16,8 @@
   }
 
   .depot-page .map-container {
-    height: 350px; /* Aumentado de 240px para melhor visualização em mobile */
-    max-height: 45vh; /* Aumentado de 30vh */
+    height: 240px; /* Dobrado para melhor visualização */
+    max-height: 35vh;
   }
 
   .documents-grid {
@@ -177,8 +177,8 @@
   }
 
   .depot-page .map-container {
-    height: 400px; /* Aumentado de 260px para melhor visualização em tablet */
-    max-height: 50vh; /* Aumentado de 32vh */
+    height: 280px; /* Dobrado para melhor visualização */
+    max-height: 38vh;
   }
 
   .documents-grid {
@@ -276,8 +276,8 @@
   }
 
   .depot-page .map-container {
-    height: 500px; /* Aumentado para desktop - melhor visualização */
-    max-height: 60vh; /* 60% da viewport em desktop */
+    height: 320px; /* Dobrado para melhor visualização */
+    max-height: 42vh;
   }
 
   .company-logo {
