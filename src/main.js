@@ -19,6 +19,8 @@ import { renderBankDetailsPage } from './pages/BankDetailsPage.js'
 import { renderDocumentGuidePage } from './pages/DocumentGuidePage.js'
 import { renderDocumentsUploadPage } from './pages/DocumentsUploadPage.js'
 import { createCompletionPage } from './pages/CompletionPage.js'
+import { onLanguageChange, getSavedLanguage } from './utils/translations.js'
+import { sendAbandonmentNotification } from './services/automationService.js'
 
 /**
  * Estado global da aplicação
@@ -45,6 +47,22 @@ async function initApp() {
 
   // Carregar dados salvos (se houver)
   loadSavedProgress()
+
+  // Registrar listener para mudança de idioma
+  onLanguageChange((newLang, oldLang) => {
+    console.log(`🌐 Idioma alterado de ${oldLang} para ${newLang}`)
+
+    // Atualizar idioma no formData
+    appState.formData.language = newLang
+
+    // Salvar no localStorage
+    const savedData = JSON.parse(localStorage.getItem('sbl_form_data') || '{}')
+    savedData.language = newLang
+    localStorage.setItem('sbl_form_data', JSON.stringify(savedData))
+
+    // Re-renderizar aplicação com novo idioma
+    renderApp()
+  })
 
   // Renderizar aplicação
   renderApp()
@@ -488,13 +506,16 @@ function updateProgressAndRender() {
  * Detectar abandono de formulário
  */
 function setupAbandonmentTracking() {
+  // Verificar se há abandono anterior ao carregar a página
+  checkPreviousAbandonment()
+
   // Detectar quando usuário sai da página
   window.addEventListener('beforeunload', (e) => {
     // Só rastrear se usuário começou a preencher e não completou
     if (appState.currentStep > STEPS.WELCOME && appState.currentStep <= STEPS.DOCUMENTS_UPLOAD && !appState.formData.isCompleted) {
       console.log('⚠️ Usuário abandonando formulário no step:', appState.currentStep)
 
-      // Salvar estado de abandono
+      // Salvar estado de abandono no localStorage
       const abandonmentData = {
         step: appState.currentStep,
         timestamp: new Date().toISOString(),
@@ -503,10 +524,109 @@ function setupAbandonmentTracking() {
 
       localStorage.setItem('sbl_abandonment', JSON.stringify(abandonmentData))
 
-      // Nota: O navegador pode bloquear chamadas assíncronas aqui
-      // O tracking real será feito por um service worker ou beacon API
+      // Marcar flag para enviar notificação na próxima abertura
+      localStorage.setItem('sbl_abandonment_pending', 'true')
     }
   })
+
+  // Detectar inatividade (5 minutos sem interação)
+  let inactivityTimer = null
+  const INACTIVITY_TIMEOUT = 5 * 60 * 1000 // 5 minutos
+
+  function resetInactivityTimer() {
+    clearTimeout(inactivityTimer)
+
+    // Só criar timer se formulário não está completo
+    if (appState.currentStep > STEPS.WELCOME && !appState.formData.isCompleted) {
+      inactivityTimer = setTimeout(() => {
+        console.log('⚠️ Usuário inativo há 5 minutos no step:', appState.currentStep)
+
+        // Salvar abandono por inatividade
+        const abandonmentData = {
+          step: appState.currentStep,
+          timestamp: new Date().toISOString(),
+          formData: appState.formData,
+          reason: 'inactivity'
+        }
+
+        localStorage.setItem('sbl_abandonment', JSON.stringify(abandonmentData))
+
+        // Enviar notificação de abandono via n8n
+        sendAbandonmentNotification({
+          email: appState.formData.email,
+          full_name: appState.formData.fullName,
+          phone: appState.formData.phone,
+          current_step: appState.currentStep,
+          language: appState.formData.language || 'en',
+          selected_depot: appState.formData.selectedDepot,
+          created_at: appState.formData.createdAt,
+          last_activity: new Date().toISOString(),
+          completed_steps: appState.formData.completedSteps || []
+        }).then(result => {
+          if (result.success) {
+            console.log('✅ Notificação de abandono (inatividade) enviada para n8n')
+            localStorage.setItem('sbl_abandonment_sent', 'true')
+          }
+        }).catch(error => {
+          console.error('❌ Erro ao enviar notificação de abandono:', error)
+        })
+      }, INACTIVITY_TIMEOUT)
+    }
+  }
+
+  // Eventos que resetam o timer de inatividade
+  const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click']
+  activityEvents.forEach(event => {
+    document.addEventListener(event, resetInactivityTimer, true)
+  })
+
+  // Iniciar timer
+  resetInactivityTimer()
+}
+
+/**
+ * Verificar se há abandono anterior e enviar notificação
+ */
+async function checkPreviousAbandonment() {
+  try {
+    const abandonmentPending = localStorage.getItem('sbl_abandonment_pending')
+    const abandonmentSent = localStorage.getItem('sbl_abandonment_sent')
+    const abandonmentData = localStorage.getItem('sbl_abandonment')
+
+    // Se há abandono pendente e ainda não foi enviado
+    if (abandonmentPending === 'true' && abandonmentSent !== 'true' && abandonmentData) {
+      const data = JSON.parse(abandonmentData)
+
+      console.log('📧 Enviando notificação de abandono para n8n...')
+
+      // Enviar notificação para n8n
+      const result = await sendAbandonmentNotification({
+        email: data.formData.email,
+        full_name: data.formData.fullName,
+        phone: data.formData.phone,
+        current_step: data.step,
+        language: data.formData.language || 'en',
+        selected_depot: data.formData.selectedDepot,
+        created_at: data.formData.createdAt,
+        last_activity: data.timestamp,
+        completed_steps: data.formData.completedSteps || []
+      })
+
+      if (result.success) {
+        console.log('✅ Notificação de abandono enviada com sucesso!')
+
+        // Marcar como enviado
+        localStorage.setItem('sbl_abandonment_sent', 'true')
+
+        // Limpar flag de pendente
+        localStorage.removeItem('sbl_abandonment_pending')
+      } else {
+        console.warn('⚠️ Falha ao enviar notificação de abandono:', result.error)
+      }
+    }
+  } catch (error) {
+    console.error('❌ Erro ao verificar abandono anterior:', error)
+  }
 }
 
 /**

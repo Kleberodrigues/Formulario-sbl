@@ -13,7 +13,9 @@
       "Bash(timeout /t 5)",
       "Bash(nul)",
       "Bash(ping:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []

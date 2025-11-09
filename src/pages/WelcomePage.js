@@ -6,7 +6,7 @@
 import { createFormStep, createStepContent, createStepButtons, setButtonLoading } from '../components/FormStep.js'
 import { createLanguageSelector } from '../components/LanguageSelector.js'
 import { STEPS } from '../config/constants.js'
-import { t, getSavedLanguage } from '../utils/translations.js'
+import { t, getSavedLanguage, saveLanguage } from '../utils/translations.js'
 import { saveFormStep } from '../services/supabaseService.js'
 
 /**
@@ -98,7 +98,7 @@ export function createWelcomePage(onContinue) {
   // Event listener para mudança de idioma
   languageDropdown.addEventListener('change', (e) => {
     currentLanguage = e.target.value
-    localStorage.setItem('language', currentLanguage)
+    saveLanguage(currentLanguage) // Salvar e notificar mudança de idioma
     updateTexts()
   })
 

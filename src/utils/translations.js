@@ -1012,7 +1012,7 @@ export function getBrowserLanguage() {
   if (browserLang.startsWith('bg')) return 'bg'
   if (browserLang.startsWith('ro')) return 'ro'
 
-  return 'pt-BR' // Default
+  return 'en' // Default: English (GB)
 }
 
 /**
@@ -1025,11 +1025,44 @@ export function getSavedLanguage() {
 }
 
 /**
- * Salvar idioma selecionado no localStorage
+ * Event listeners para mudança de idioma
+ */
+const languageChangeListeners = []
+
+/**
+ * Registrar listener para mudança de idioma
+ * @param {function} callback - Função chamada quando idioma mudar
+ */
+export function onLanguageChange(callback) {
+  languageChangeListeners.push(callback)
+
+  // Retornar função para remover listener
+  return () => {
+    const index = languageChangeListeners.indexOf(callback)
+    if (index > -1) {
+      languageChangeListeners.splice(index, 1)
+    }
+  }
+}
+
+/**
+ * Salvar idioma selecionado no localStorage e notificar listeners
  * @param {string} lang - Código do idioma
  */
 export function saveLanguage(lang) {
+  const oldLang = getSavedLanguage()
   localStorage.setItem('sbl_language', lang)
+
+  // Notificar todos os listeners se o idioma mudou
+  if (oldLang !== lang) {
+    languageChangeListeners.forEach(listener => {
+      try {
+        listener(lang, oldLang)
+      } catch (error) {
+        console.error('Erro ao notificar mudança de idioma:', error)
+      }
+    })
+  }
 }
 
 export default {
@@ -1037,5 +1070,6 @@ export default {
   t,
   getBrowserLanguage,
   getSavedLanguage,
-  saveLanguage
+  saveLanguage,
+  onLanguageChange
 }
