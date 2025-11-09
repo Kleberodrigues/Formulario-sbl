@@ -232,8 +232,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  max-height: calc(100vh - 150px);
 }
 
 /* Form Page - usado nos steps 2-11 */
@@ -242,8 +240,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  max-height: calc(100vh - 150px);
 }
 
 .form-header {

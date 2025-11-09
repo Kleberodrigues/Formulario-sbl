@@ -5,14 +5,6 @@
 
 /* ========== Mobile (320px - 767px) ========== */
 @media (max-width: 767px) {
-  #app {
-    padding: var(--spacing-sm);
-  }
-
-  .app-container {
-    border-radius: var(--border-radius);
-  }
-
   .sbl-header {
     padding: var(--spacing-sm);
   }
@@ -87,10 +79,6 @@
 
 /* ========== Tablet (768px - 1023px) ========== */
 @media (min-width: 768px) and (max-width: 1023px) {
-  #app {
-    max-width: 700px;
-  }
-
   .company-logo {
     max-width: 220px;
   }
@@ -106,15 +94,6 @@
 
 /* ========== Desktop (1024px - 1439px) ========== */
 @media (min-width: 1024px) {
-  #app {
-    max-width: 800px;
-    padding: var(--spacing-lg);
-  }
-
-  .app-container {
-    box-shadow: var(--shadow-lg);
-  }
-
   .company-logo {
     max-width: 250px;
   }
@@ -146,10 +125,6 @@
 
 /* ========== Wide (1440px+) ========== */
 @media (min-width: 1440px) {
-  #app {
-    max-width: 900px;
-  }
-
   .form-step {
     padding: var(--spacing-xl) 80px;
   }
@@ -209,13 +184,8 @@
   }
 
   #app {
-    max-width: 100%;
+    width: 100%;
     padding: 0;
-  }
-
-  .app-container {
-    box-shadow: none;
-    border-radius: 0;
   }
 
   .step-buttons {
