@@ -221,7 +221,7 @@ export function renderDocumentsUploadPage(container, options = {}) {
 
       const card = createDocumentCard({
         documentType: docType,
-        documentLabel: t(lang, `documentsUpload.${docType}`) || DOCUMENT_LABELS[docType],
+        documentLabel: DOCUMENT_LABELS[docType], // Usar label diretamente
         status: docState ? docState.status : DOCUMENT_STATUS.PENDING,
         lang,
         onUpload: () => openUploadModal(docType, DOCUMENT_LABELS[docType]),

@@ -409,6 +409,12 @@ function renderCompletionMessage(container) {
   container.innerHTML = ''
   container.appendChild(completionPage)
 
+  // Esconder barra de progresso na página de conclusão
+  const progressContainer = document.getElementById('progress-container')
+  if (progressContainer) {
+    progressContainer.style.display = 'none'
+  }
+
   // Limpar dados salvos localmente (já está no Supabase)
   localStorage.removeItem('sbl_form_data')
   localStorage.removeItem('sbl_abandonment')
