@@ -53,8 +53,8 @@ export const STEP_NAMES = {
   11: 'documents_upload'
 }
 
-// Total de steps (sem contar o step de boas-vindas)
-export const TOTAL_STEPS = 10
+// Total de steps (11 steps incluindo Welcome)
+export const TOTAL_STEPS = 11
 
 // Idiomas suportados
 export const LANGUAGES = {
