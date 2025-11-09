@@ -58,10 +58,13 @@ export function renderDepotPage(container, options = {}) {
         </div>
       </div>
 
-      <!-- Botão Proceed centralizado (como na referência) -->
-      <div class="form-actions" style="justify-content: center;">
+      <!-- Botões de navegação -->
+      <div class="form-actions" style="justify-content: space-between; gap: 16px;">
+        <button type="button" class="btn btn-secondary" id="backBtn" style="min-width: 200px;">
+          ${t(lang, 'depot.backButton')}
+        </button>
         <button type="button" class="btn btn-primary" id="proceedBtn" disabled style="min-width: 500px;">
-          Proceed
+          ${t(lang, 'depot.continueButton')}
         </button>
       </div>
     </div>
@@ -74,6 +77,7 @@ export function renderDepotPage(container, options = {}) {
   const depotBadge = container.querySelector('#depotBadge')
   const depotAddress = container.querySelector('#depotAddress')
   const depotCode = container.querySelector('#depotCode')
+  const backBtn = container.querySelector('#backBtn')
   const proceedBtn = container.querySelector('#proceedBtn')
 
   /**
@@ -204,6 +208,18 @@ export function renderDepotPage(container, options = {}) {
 
   // Inicializar seletor
   initializeDepotSelector()
+
+  // Event listener para botão Back
+  backBtn.addEventListener('click', () => {
+    // Limpar mapa antes de voltar
+    if (mapInstance && mapInstance.remove) {
+      mapInstance.remove()
+    }
+
+    if (onBack) {
+      onBack()
+    }
+  })
 
   // Event listener para botão Proceed
   proceedBtn.addEventListener('click', async () => {

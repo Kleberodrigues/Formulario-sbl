@@ -1,0 +1,225 @@
+{
+  "name": "SBL Onboarding - Form Abandonment",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "formulario-sbl-abandonment",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-abandonment",
+      "name": "Webhook - Form Abandoned",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "formulario-sbl-abandonment"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Abandonment notification received\", \"timestamp\": $now } }}"
+      },
+      "id": "webhook-response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.event }}",
+              "value2": "form_abandoned"
+            }
+          ]
+        }
+      },
+      "id": "check-event-type",
+      "name": "Check Event Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Extrair dados do abandono\nconst data = $input.item.json.data || {};\nconst metadata = $input.item.json.metadata || {};\n\n// Formatar dados para email\nconst emailData = {\n  email: data.email || '',\n  fullName: data.full_name || 'Candidato',\n  phone: data.phone || '',\n  abandonedStep: data.abandoned_at_step || 1,\n  language: data.language || 'en',\n  selectedDepot: data.selected_depot || 'N/A',\n  returnUrl: data.return_url || '',\n  completedSteps: data.completed_steps || [],\n  totalSteps: 11,\n  progressPercentage: Math.round((data.completed_steps?.length || 0) / 11 * 100),\n  timestamp: $input.item.json.timestamp || new Date().toISOString(),\n  userAgent: metadata.user_agent || '',\n  source: metadata.source || 'sbl_onboarding_form'\n};\n\n// Determinar mensagem baseada no idioma\nconst messages = {\n  'en': {\n    subject: 'Complete Your SBL Application',\n    greeting: 'Hello',\n    body: `We noticed you started your application with Silva Brothers Logistics but didn't finish.\\n\\nYou were on step ${emailData.abandonedStep} of ${emailData.totalSteps} (${emailData.progressPercentage}% complete).\\n\\nWe'd love to have you join our team! Complete your application now:`,\n    cta: 'Continue Application',\n    footer: 'If you have any questions, feel free to contact us.\\n\\nBest regards,\\nSilva Brothers Logistics Team'\n  },\n  'pt-BR': {\n    subject: 'Complete Sua Candidatura na SBL',\n    greeting: 'Olá',\n    body: `Notamos que você começou sua candidatura na Silva Brothers Logistics mas não finalizou.\\n\\nVocê estava na etapa ${emailData.abandonedStep} de ${emailData.totalSteps} (${emailData.progressPercentage}% completo).\\n\\nGostaríamos muito de ter você em nosso time! Complete sua candidatura agora:`,\n    cta: 'Continuar Candidatura',\n    footer: 'Se tiver alguma dúvida, não hesite em nos contatar.\\n\\nAtenciosamente,\\nEquipe Silva Brothers Logistics'\n  },\n  'bg': {\n    subject: 'Завършете Вашата Кандидатура за SBL',\n    greeting: 'Здравейте',\n    body: `Забелязахме, че започнахте кандидатурата си в Silva Brothers Logistics, но не я завършихте.\\n\\nБяхте на стъпка ${emailData.abandonedStep} от ${emailData.totalSteps} (${emailData.progressPercentage}% завършено).\\n\\nБихме искали да се присъедините към нашия екип! Завършете кандидатурата си сега:`,\n    cta: 'Продължете Кандидатурата',\n    footer: 'Ако имате въпроси, моля свържете се с нас.\\n\\nС уважение,\\nЕкипът на Silva Brothers Logistics'\n  },\n  'ro': {\n    subject: 'Completează Aplicația Ta pentru SBL',\n    greeting: 'Bună',\n    body: `Am observat că ai început aplicația ta la Silva Brothers Logistics dar nu ai finalizat-o.\\n\\nErai la pasul ${emailData.abandonedStep} din ${emailData.totalSteps} (${emailData.progressPercentage}% completat).\\n\\nNe-ar plăcea să te alături echipei noastre! Completează aplicația acum:`,\n    cta: 'Continuă Aplicația',\n    footer: 'Dacă ai întrebări, nu ezita să ne contactezi.\\n\\nCu stimă,\\nEchipa Silva Brothers Logistics'\n  }\n};\n\nconst lang = emailData.language || 'en';\nconst msg = messages[lang] || messages['en'];\n\nemailData.subject = msg.subject;\nemailData.greeting = msg.greeting;\nemailData.bodyText = msg.body;\nemailData.ctaText = msg.cta;\nemailData.footer = msg.footer;\n\nreturn { json: emailData };"
+      },
+      "id": "process-abandonment-data",
+      "name": "Process Abandonment Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@silvabrotherslogistics.com",
+        "toEmail": "={{ $json.email }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "={{ `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: #17A798; color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }\n    .content { background: #f5f5f5; padding: 30px; }\n    .cta-button { display: inline-block; background: #17A798; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }\n    .footer { background: #333; color: white; padding: 20px; text-align: center; font-size: 12px; border-radius: 0 0 8px 8px; }\n    .progress-bar { background: #ddd; height: 20px; border-radius: 10px; overflow: hidden; margin: 20px 0; }\n    .progress-fill { background: #17A798; height: 100%; transition: width 0.3s; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>Silva Brothers Logistics LTD</h1>\n    </div>\n    <div class=\"content\">\n      <h2>${$json.greeting} ${$json.fullName},</h2>\n      <p>${$json.bodyText}</p>\n      \n      <div class=\"progress-bar\">\n        <div class=\"progress-fill\" style=\"width: ${$json.progressPercentage}%;\"></div>\n      </div>\n      <p style=\"text-align: center; color: #666;\">Progress: ${$json.progressPercentage}% complete</p>\n      \n      <div style=\"text-align: center;\">\n        <a href=\"${$json.returnUrl}\" class=\"cta-button\">${$json.ctaText}</a>\n      </div>\n      \n      <p style=\"white-space: pre-line;\">${$json.footer}</p>\n    </div>\n    <div class=\"footer\">\n      <p>&copy; 2025 Silva Brothers Logistics LTD. All rights reserved.</p>\n    </div>\n  </div>\n</body>\n</html>\n` }}"
+      },
+      "id": "send-email",
+      "name": "Send Abandonment Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1050, 200],
+      "credentials": {
+        "smtp": {
+          "id": "1",
+          "name": "SMTP Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.phone }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "check-phone",
+      "name": "Check if Phone Available",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Preparar mensagem WhatsApp baseada no idioma\nconst data = $input.item.json;\nconst messages = {\n  'en': `Hi ${data.fullName}! 👋\\n\\nWe noticed you started your application with Silva Brothers Logistics but didn't complete it.\\n\\nYou're ${data.progressPercentage}% done - just ${11 - data.completedSteps.length} more steps!\\n\\nContinue here: ${data.returnUrl}\\n\\nNeed help? Reply to this message!`,\n  'pt-BR': `Oi ${data.fullName}! 👋\\n\\nNotamos que você começou sua candidatura na Silva Brothers Logistics mas não completou.\\n\\nVocê está ${data.progressPercentage}% pronto - faltam apenas ${11 - data.completedSteps.length} etapas!\\n\\nContinue aqui: ${data.returnUrl}\\n\\nPrecisa de ajuda? Responda esta mensagem!`,\n  'bg': `Здравей ${data.fullName}! 👋\\n\\nЗабелязахме, че започна кандидатурата си в Silva Brothers Logistics, но не я завърши.\\n\\nГотов си на ${data.progressPercentage}% - остават само ${11 - data.completedSteps.length} стъпки!\\n\\nПродължи тук: ${data.returnUrl}\\n\\nТрябва ли помощ? Отговори на това съобщение!`,\n  'ro': `Bună ${data.fullName}! 👋\\n\\nAm observat că ai început aplicația la Silva Brothers Logistics dar nu ai finalizat-o.\\n\\nEști ${data.progressPercentage}% gata - mai sunt doar ${11 - data.completedSteps.length} pași!\\n\\nContinuă aici: ${data.returnUrl}\\n\\nAi nevoie de ajutor? Răspunde la acest mesaj!`\n};\n\nconst lang = data.language || 'en';\nconst message = messages[lang] || messages['en'];\n\nreturn {\n  json: {\n    phone: data.phone,\n    message: message,\n    fullName: data.fullName\n  }\n};"
+      },
+      "id": "prepare-whatsapp",
+      "name": "Prepare WhatsApp Message",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1050, 400]
+    },
+    {
+      "parameters": {
+        "phoneNumber": "={{ $json.phone }}",
+        "message": "={{ $json.message }}"
+      },
+      "id": "send-whatsapp",
+      "name": "Send WhatsApp",
+      "type": "n8n-nodes-base.whatsapp",
+      "typeVersion": 1,
+      "position": [1250, 400],
+      "credentials": {
+        "whatsappApi": {
+          "id": "2",
+          "name": "WhatsApp Business API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "form_abandonments",
+        "columns": "email, phone, full_name, abandoned_at_step, language, selected_depot, followup_sent, followup_type, created_at",
+        "values": "={{ $json.email }}, ={{ $json.phone }}, ={{ $json.fullName }}, ={{ $json.abandonedStep }}, ={{ $json.language }}, ={{ $json.selectedDepot }}, true, email, ={{ $now }}"
+      },
+      "id": "log-to-supabase",
+      "name": "Log Abandonment to Supabase",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [1250, 200],
+      "credentials": {
+        "postgres": {
+          "id": "3",
+          "name": "Supabase Database"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook - Form Abandoned": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check Event Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Event Type": {
+      "main": [
+        [
+          {
+            "node": "Process Abandonment Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check if Phone Available",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Abandonment Data": {
+      "main": [
+        [
+          {
+            "node": "Send Abandonment Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Abandonment Email": {
+      "main": [
+        [
+          {
+            "node": "Log Abandonment to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Phone Available": {
+      "main": [
+        [
+          {
+            "node": "Prepare WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare WhatsApp Message": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "versionId": "1.0.0",
+  "id": "sbl-onboarding-abandonment",
+  "meta": {
+    "instanceId": "heavydragonfly-n8n"
+  },
+  "tags": []
+}

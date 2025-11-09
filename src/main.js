@@ -230,7 +230,7 @@ function renderContactStep(container) {
  */
 function renderDepotStep(container) {
   renderDepotPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 2 concluído:', data)
 
@@ -253,7 +253,7 @@ function renderDepotStep(container) {
  */
 function renderPersonalInfoStep(container) {
   renderPersonalInfoPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 4 concluído:', data)
 
@@ -275,7 +275,7 @@ function renderPersonalInfoStep(container) {
  */
 function renderAddressHistoryStep(container) {
   renderAddressHistoryPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 5 concluído:', data)
 
@@ -297,7 +297,7 @@ function renderAddressHistoryStep(container) {
  */
 function renderAdditionalInfoStep(container) {
   renderAdditionalInfoPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 6 concluído:', data)
 
@@ -319,7 +319,7 @@ function renderAdditionalInfoStep(container) {
  */
 function renderProfilePhotoStep(container) {
   renderProfilePhotoPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 7 concluído:', data)
 
@@ -341,7 +341,7 @@ function renderProfilePhotoStep(container) {
  */
 function renderDrivingLicenceStep(container) {
   renderDrivingLicencePage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 8 concluído:', data)
 
@@ -364,7 +364,7 @@ function renderDrivingLicenceStep(container) {
  */
 function renderBankDetailsStep(container) {
   renderBankDetailsPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 9 concluído:', data)
 
@@ -387,7 +387,7 @@ function renderBankDetailsStep(container) {
  */
 function renderDocumentGuideStep(container) {
   renderDocumentGuidePage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: () => {
       console.log('✅ Step 10 concluído')
       goToNextStep()
@@ -405,7 +405,7 @@ function renderDocumentGuideStep(container) {
  */
 function renderDocumentsUploadStep(container) {
   renderDocumentsUploadPage(container, {
-    lang: appState.formData.language || 'pt-BR',
+    lang: appState.formData.language || 'en',
     onNext: (data) => {
       console.log('✅ Step 11 concluído - Formulário completo!', data)
 
