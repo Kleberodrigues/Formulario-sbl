@@ -3,36 +3,70 @@
  * Header, LanguageSelector, ProgressBar, FormStep, etc.
  */
 
-/* ========== Header ========== */
+/* ========== Header (Design Original) ========== */
 .sbl-header {
-  background: white;
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  margin-bottom: 80px; /* Espaço para o logo circular */
 }
 
-.header-container {
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.logo-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.company-logo {
-  max-width: 200px;
-  height: auto;
-}
-
-.logo-fallback {
+.header-gradient {
+  background: var(--color-gradient);
+  padding: var(--spacing-xl) var(--spacing-lg);
   text-align: center;
+  color: white;
+  border-radius: 0;
 }
 
-.company-name {
-  font-size: var(--font-size-2xl);
-  color: var(--color-primary);
+.header-label {
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  margin: 0 0 var(--spacing-sm) 0;
+  opacity: 0.95;
+}
+
+.header-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.header-logo-circle {
+  position: absolute;
+  left: 50%;
+  bottom: -60px;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10;
+}
+
+.logo-circle-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-circle-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-gradient);
+  border-radius: 50%;
+}
+
+.logo-circle-text {
+  color: white;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -325,42 +359,50 @@
 
 .btn {
   flex: 1;
-  padding: var(--spacing-md);
+  padding: 18px 24px;
+  min-height: 56px;
   font-size: var(--font-size-base);
   font-weight: 600;
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 10px;
   cursor: pointer;
-  transition: all var(--transition);
+  transition: all 0.2s ease;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .btn-primary {
-  background: var(--color-primary);
+  background: var(--color-gradient);
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--color-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(29, 191, 175, 0.3);
 }
 
 .btn-primary:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(29, 191, 175, 0.2);
 }
 
 .btn-secondary {
-  background: var(--color-input-bg);
+  background: #F7FAFC;
   color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #e8e8e8;
+  background: #EDF2F7;
+  border-color: var(--color-text-light);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 

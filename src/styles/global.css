@@ -5,14 +5,18 @@
 
 /* ========== CSS Variables ========== */
 :root {
-  /* Cores */
-  --color-primary: #17A798;
-  --color-primary-hover: #148882;
+  /* Cores - Baseado no design original */
+  --color-primary: #1DBFAF;
+  --color-primary-dark: #18a196;
+  --color-primary-light: #20D4C3;
+  --color-gradient: linear-gradient(135deg, #1DBFAF 0%, #20D4C3 100%);
   --color-secondary: #FFFFFF;
-  --color-text: #333333;
-  --color-text-light: #666666;
-  --color-input-bg: #F5F5F5;
-  --color-border: #DDDDDD;
+  --color-text: #2D3748;
+  --color-text-medium: #718096;
+  --color-text-light: #A0AEC0;
+  --color-input: #FFFFFF;
+  --color-input-bg: #F7FAFC;
+  --color-border: #E2E8F0;
   --color-error: #E74C3C;
   --color-success: #27AE60;
   --color-warning: #F39C12;
@@ -64,19 +68,21 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   color: var(--color-text);
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #FFFFFF;
   min-height: 100vh;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 /* ========== Container Principal ========== */
 #app {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
-  padding: var(--spacing-md);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: #FFFFFF;
 }
 
 .app-container {
