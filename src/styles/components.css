@@ -6,26 +6,27 @@
 /* ========== Header (Design Original) ========== */
 .sbl-header {
   position: relative;
-  margin-bottom: 80px; /* Espaço para o logo circular */
+  margin-bottom: 50px; /* Espaço para o logo circular */
+  flex-shrink: 0;
 }
 
 .header-gradient {
   background: var(--color-gradient);
-  padding: var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-md);
   text-align: center;
   color: white;
   border-radius: 0;
 }
 
 .header-label {
-  font-size: var(--font-size-base);
+  font-size: 14px;
   font-weight: 400;
-  margin: 0 0 var(--spacing-sm) 0;
+  margin: 0 0 4px 0;
   opacity: 0.95;
 }
 
 .header-title {
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
@@ -34,17 +35,17 @@
 .header-logo-circle {
   position: absolute;
   left: 50%;
-  bottom: -60px;
+  bottom: -40px;
   transform: translateX(-50%);
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   background: white;
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 12px;
   z-index: 10;
 }
 
@@ -66,7 +67,7 @@
 
 .logo-circle-text {
   color: white;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -227,52 +228,59 @@
 
 /* ========== Form Steps ========== */
 .form-step {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
 }
 
 /* Form Page - usado nos steps 2-11 */
 .form-page {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
 }
 
 .form-header {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
   text-align: center;
+  flex-shrink: 0;
 }
 
 .form-title {
-  font-size: var(--font-size-xl);
+  font-size: 20px;
   color: var(--color-primary);
   font-weight: 700;
-  margin: 0 0 var(--spacing-sm) 0;
+  margin: 0 0 var(--spacing-xs) 0;
 }
 
 .form-subtitle {
-  font-size: var(--font-size-base);
-  color: var(--color-text-light);
+  font-size: 14px;
+  color: var(--color-text-medium);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.4;
 }
 
 .form-content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .form-actions {
   display: flex;
   gap: var(--spacing-sm);
   justify-content: space-between;
-  margin-top: var(--spacing-xl);
-  padding-top: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
   border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 .step-content {
@@ -359,12 +367,12 @@
 
 .btn {
   flex: 1;
-  padding: 18px 24px;
-  min-height: 56px;
-  font-size: var(--font-size-base);
+  padding: 14px 20px;
+  min-height: 48px;
+  font-size: 15px;
   font-weight: 600;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
