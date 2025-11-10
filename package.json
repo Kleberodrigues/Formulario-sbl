@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "setup-n8n": "node setup-n8n.js"
   },
   "keywords": [
     "sbl",
@@ -20,7 +21,9 @@
   "license": "MIT",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
-    "maplibre-gl": "^4.0.0"
+    "maplibre-gl": "^4.0.0",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "vite": "^5.0.0"

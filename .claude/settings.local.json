@@ -16,7 +16,9 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push)",
-      "WebFetch(domain:heavydragonfly-n8n.cloudfy.cloud)"
+      "WebFetch(domain:heavydragonfly-n8n.cloudfy.cloud)",
+      "Bash(npm install:*)",
+      "Bash(npm run setup-n8n:*)"
     ],
     "deny": [],
     "ask": []
