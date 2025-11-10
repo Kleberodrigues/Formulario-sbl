@@ -740,8 +740,9 @@ export async function getCandidateCompletionStatus(candidateId) {
 
     if (error) throw error
 
-    console.log('📊 Status de conclusão:', data?.[0])
-    return data?.[0] || {
+    // A função agora retorna JSON diretamente (não array)
+    console.log('📊 Status de conclusão:', data)
+    return data || {
       total_required: 0,
       total_uploaded: 0,
       total_approved: 0,

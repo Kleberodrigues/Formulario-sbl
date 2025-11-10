@@ -165,7 +165,8 @@ async function testGetCompletionStatus(candidateId) {
 
     if (error) throw error;
 
-    const status = data[0];
+    // A função agora retorna JSON diretamente (não array)
+    const status = data;
     console.log(`    Total obrigatórios: ${status.total_required}`);
     console.log(`    Total enviados: ${status.total_uploaded}`);
     console.log(`    Completo: ${status.is_complete ? 'Sim' : 'Não'}`);
