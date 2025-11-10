@@ -18,7 +18,11 @@
       "Bash(git push)",
       "WebFetch(domain:heavydragonfly-n8n.cloudfy.cloud)",
       "Bash(npm install:*)",
-      "Bash(npm run setup-n8n:*)"
+      "Bash(npm run setup-n8n:*)",
+      "Bash(npm run migrate:dry-run:*)",
+      "Bash(npm run test:supabase:*)",
+      "Bash(npm run setup-docs:*)",
+      "Bash(npm run setup-supabase:*)"
     ],
     "deny": [],
     "ask": []
