@@ -15,7 +15,7 @@ import {
   clearInputError,
   cleanInput
 } from '../utils/validators.js'
-import { upsertFormSubmission } from '../services/supabaseService.js'
+import { upsertCandidate } from '../services/supabaseService.js'
 
 /**
  * Criar Step de Contato
@@ -230,20 +230,29 @@ export function createContactPage(initialData = {}, onContinue, onBack) {
       localStorage.setItem('sbl_form_data', JSON.stringify(updatedData))
       console.log('💾 Dados de contato salvos localmente')
 
-      // Tentar salvar no Supabase (incluindo dados de steps anteriores)
+      // Tentar salvar no Supabase usando estrutura normalizada (candidates)
       try {
-        await upsertFormSubmission(formState.email, {
+        const candidate = await upsertCandidate({
           fullName: formState.fullName,
+          email: formState.email,
           phone: formState.phone,
           language: savedData.language || currentLanguage,
           selectedDepot: savedData.selectedDepot,
           depotCode: savedData.depotCode,
-          currentStep: STEPS.CONTACT,
-          completedSteps: updatedData.completedSteps
+          status: 'in_progress'
         })
-        console.log('✅ Dados salvos no Supabase (incluindo idioma e depot)')
+
+        console.log('✅ Candidato salvo no Supabase:', candidate.id)
+
+        // Salvar candidateId no localStorage para próximos steps
+        updatedData.candidateId = candidate.id
+        localStorage.setItem('sbl_form_data', JSON.stringify(updatedData))
+
+        // Retornar candidateId para ser usado nos próximos steps
+        formState.candidateId = candidate.id
+
       } catch (supabaseError) {
-        console.warn('⚠️ Erro ao salvar no Supabase:', supabaseError.message)
+        console.warn('⚠️ Erro ao salvar candidato no Supabase:', supabaseError.message)
         // Continuar mesmo se Supabase falhar (dados estão no localStorage)
       }
 
@@ -268,13 +277,14 @@ export function createContactPage(initialData = {}, onContinue, onBack) {
       const success = await saveContactData()
 
       if (success) {
-        console.log('✅ Step 2 concluído:', formState)
+        console.log('✅ Step 3 (Contact) concluído:', formState)
 
         if (onContinue) {
           onContinue({
             fullName: formState.fullName,
             email: formState.email,
-            phone: formState.phone
+            phone: formState.phone,
+            candidateId: formState.candidateId // Passar candidateId para próximos steps
           })
         }
       }

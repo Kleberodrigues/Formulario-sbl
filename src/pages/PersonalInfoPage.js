@@ -5,7 +5,7 @@
 
 import { t } from '../utils/translations.js'
 import { validateBirthDate, validatePhone } from '../utils/validators.js'
-import { saveFormStep } from '../services/supabaseService.js'
+import { updateCandidateFields } from '../services/supabaseService.js'
 
 /**
  * Renderizar página de informações pessoais
@@ -200,13 +200,25 @@ export function renderPersonalInfoPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 4, data)
+      // Atualizar campos do candidato na estrutura normalizada
+      await updateCandidateFields(formData.candidateId, {
+        birth_date: data.birthDate,
+        birth_city: data.birthCity,
+        birth_country: data.birthCountry || 'United Kingdom',
+        mother_name: data.motherName,
+        mother_surname: data.motherSurname,
+        next_of_kin_name: data.nextOfKinName,
+        next_of_kin_relationship: data.nextOfKinRelationship,
+        next_of_kin_phone: data.nextOfKinPhone
+      })
+
+      console.log('✅ Step 4 (PersonalInfo) salvo no Supabase')
 
       if (onNext) {
         onNext(data)
       }
     } catch (error) {
-      console.error('Error saving personal info:', error)
+      console.error('❌ Erro ao salvar informações pessoais:', error)
       alert(t(lang, 'system.error'))
       continueBtn.disabled = false
       continueBtn.textContent = t(lang, 'personalInfo.continueButton')

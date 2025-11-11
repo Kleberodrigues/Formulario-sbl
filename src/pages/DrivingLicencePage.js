@@ -5,7 +5,7 @@
 
 import { t } from '../utils/translations.js'
 import { createFileUpload, getUploadedFile } from '../components/FileUpload.js'
-import { saveFormStep, uploadFile } from '../services/supabaseService.js'
+import { uploadCandidateDocument } from '../services/supabaseService.js'
 import { VALIDATION, STORAGE_CONFIG } from '../config/constants.js'
 
 /**
@@ -120,8 +120,11 @@ export function renderDrivingLicencePage(container, options = {}) {
 
       // Upload frente se houver novo arquivo
       if (frontFile) {
-        const frontPath = `${STORAGE_CONFIG.PATHS.DRIVING_LICENCES}/${formData.email}_front_${Date.now()}.${frontFile.name.split('.').pop()}`
-        const frontResult = await uploadFile(frontFile, frontPath)
+        const frontResult = await uploadCandidateDocument(
+          formData.candidateId,
+          'driving_licence_front',
+          frontFile
+        )
 
         if (!frontResult.success) {
           throw new Error(frontResult.error || 'Front upload failed')
@@ -132,8 +135,11 @@ export function renderDrivingLicencePage(container, options = {}) {
 
       // Upload verso se houver novo arquivo
       if (backFile) {
-        const backPath = `${STORAGE_CONFIG.PATHS.DRIVING_LICENCES}/${formData.email}_back_${Date.now()}.${backFile.name.split('.').pop()}`
-        const backResult = await uploadFile(backFile, backPath)
+        const backResult = await uploadCandidateDocument(
+          formData.candidateId,
+          'driving_licence_back',
+          backFile
+        )
 
         if (!backResult.success) {
           throw new Error(backResult.error || 'Back upload failed')
@@ -142,11 +148,7 @@ export function renderDrivingLicencePage(container, options = {}) {
         backUrl = backResult.url
       }
 
-      // Salvar URLs no banco
-      await saveFormStep(formData.email, 8, {
-        drivingLicenceFrontUrl: frontUrl,
-        drivingLicenceBackUrl: backUrl
-      })
+      console.log('✅ Step 8 (DrivingLicence) salvo no Supabase')
 
       if (onNext) {
         onNext({

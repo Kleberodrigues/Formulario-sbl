@@ -9,7 +9,7 @@ import {
   validateUTRNumber,
   validateVATNumber
 } from '../utils/validators.js'
-import { saveFormStep } from '../services/supabaseService.js'
+import { updateCandidateFields } from '../services/supabaseService.js'
 
 /**
  * Renderizar página de informações adicionais
@@ -216,13 +216,21 @@ export function renderAdditionalInfoPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 6, data)
+      // Atualizar informações adicionais do candidato
+      await updateCandidateFields(formData.candidateId, {
+        national_insurance_number: data.nationalInsuranceNumber,
+        utr_number: data.utrNumber,
+        employment_status: data.employmentStatus,
+        vat_number: data.vatNumber
+      })
+
+      console.log('✅ Step 6 (AdditionalInfo) salvo no Supabase')
 
       if (onNext) {
         onNext(data)
       }
     } catch (error) {
-      console.error('Error saving additional info:', error)
+      console.error('❌ Erro ao salvar informações adicionais:', error)
       alert(t(lang, 'system.error'))
       continueBtn.disabled = false
       continueBtn.textContent = t(lang, 'additionalInfo.continueButton')

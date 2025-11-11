@@ -5,8 +5,7 @@
 
 import { t } from '../utils/translations.js'
 import { createFileUpload, getUploadedFile } from '../components/FileUpload.js'
-import { saveFormStep } from '../services/supabaseService.js'
-import { uploadFile } from '../services/supabaseService.js'
+import { uploadCandidateDocument } from '../services/supabaseService.js'
 import { VALIDATION, STORAGE_CONFIG } from '../config/constants.js'
 
 /**
@@ -100,10 +99,12 @@ export function renderProfilePhotoPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      // Upload para Supabase Storage
-      const filePath = `${STORAGE_CONFIG.PATHS.PROFILE_PHOTOS}/${formData.email}_${Date.now()}.${file.name.split('.').pop()}`
-
-      const uploadResult = await uploadFile(file, filePath)
+      // Upload para Supabase Storage + salvar em candidate_documents
+      const uploadResult = await uploadCandidateDocument(
+        formData.candidateId,
+        'profile_photo',
+        file
+      )
 
       if (!uploadResult.success) {
         throw new Error(uploadResult.error || 'Upload failed')
@@ -111,16 +112,13 @@ export function renderProfilePhotoPage(container, options = {}) {
 
       const photoUrl = uploadResult.url
 
-      // Salvar URL no banco
-      await saveFormStep(formData.email, 7, {
-        profilePhotoUrl: photoUrl
-      })
+      console.log('✅ Step 7 (ProfilePhoto) salvo no Supabase')
 
       if (onNext) {
         onNext({ profilePhotoUrl: photoUrl })
       }
     } catch (error) {
-      console.error('Error uploading photo:', error)
+      console.error('❌ Erro ao fazer upload de foto:', error)
       alert(t(lang, 'validation.uploadFailed'))
       continueBtn.disabled = false
       continueBtn.textContent = t(lang, 'profilePhoto.continueButton')

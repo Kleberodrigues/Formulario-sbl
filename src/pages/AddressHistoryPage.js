@@ -5,7 +5,7 @@
 
 import { t } from '../utils/translations.js'
 import { createAddressHistoryList } from '../components/AddressHistoryList.js'
-import { saveFormStep } from '../services/supabaseService.js'
+import { updateCandidateFields } from '../services/supabaseService.js'
 
 /**
  * Renderizar página de histórico de endereços
@@ -98,15 +98,18 @@ export function renderAddressHistoryPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 5, {
+      // Atualizar histórico de endereços do candidato (JSONB)
+      await updateCandidateFields(formData.candidateId, {
         address_history: addresses
       })
+
+      console.log('✅ Step 5 (AddressHistory) salvo no Supabase')
 
       if (onNext) {
         onNext({ addressHistory: addresses })
       }
     } catch (error) {
-      console.error('Error saving address history:', error)
+      console.error('❌ Erro ao salvar histórico de endereços:', error)
       alert(t(lang, 'system.error'))
       continueBtn.disabled = false
       continueBtn.textContent = t(lang, 'addressHistory.continueButton')

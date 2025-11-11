@@ -8,7 +8,7 @@ import {
   validateAccountNumber,
   validateSortCode
 } from '../utils/validators.js'
-import { saveFormStep } from '../services/supabaseService.js'
+import { updateCandidateFields } from '../services/supabaseService.js'
 
 /**
  * Renderizar página de dados bancários
@@ -170,11 +170,15 @@ export function renderBankDetailsPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      await saveFormStep(formData.email, 9, {
-        bankAccountNumber: data.accountNumber, // Será encriptado no backend
-        bankSortCode: data.sortCode, // Será encriptado no backend
-        paymentDeclarationAccepted: true
+      // Atualizar dados bancários do candidato (devem ser encriptados)
+      await updateCandidateFields(formData.candidateId, {
+        bank_account_number: data.accountNumber, // TODO: Implementar encriptação
+        bank_sort_code: data.sortCode, // TODO: Implementar encriptação
+        payment_declaration_accepted: true,
+        payment_declaration_accepted_at: new Date().toISOString()
       })
+
+      console.log('✅ Step 9 (BankDetails) salvo no Supabase')
 
       if (onNext) {
         onNext({
