@@ -8,11 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "serve": "vite preview",
-    "setup-n8n": "node setup-n8n.js",
-    "setup-supabase": "node setup-supabase-complete.js",
-    "migrate:dry-run": "node migrate-supabase.js --dry-run",
-    "migrate": "node migrate-supabase.js --all",
-    "test:supabase": "node test-supabase-structure.js"
+    "setup-n8n": "node scripts/setup-n8n.js",
+    "test:supabase": "node scripts/testing/test-supabase-structure.js"
   },
   "keywords": [
     "sbl",

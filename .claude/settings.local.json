@@ -22,7 +22,10 @@
       "Bash(npm run migrate:dry-run:*)",
       "Bash(npm run test:supabase:*)",
       "Bash(npm run setup-docs:*)",
-      "Bash(npm run setup-supabase:*)"
+      "Bash(npm run setup-supabase:*)",
+      "Bash(tree:*)",
+      "Bash(git mv:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
