@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "serve": "vite preview",
     "setup-n8n": "node scripts/setup-n8n.js",
-    "test:supabase": "node scripts/testing/test-supabase-structure.js"
+    "test:supabase": "node scripts/testing/test-supabase-structure.js",
+    "test:n8n": "node scripts/testing/test-n8n-webhook.js",
+    "test:e2e": "node scripts/testing/test-form-e2e.js"
   },
   "keywords": [
     "sbl",

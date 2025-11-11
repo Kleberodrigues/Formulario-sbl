@@ -25,7 +25,9 @@
       "Bash(npm run setup-supabase:*)",
       "Bash(tree:*)",
       "Bash(git mv:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(node scripts/testing/test-form-e2e.js:*)",
+      "Bash(npm run test:n8n:*)"
     ],
     "deny": [],
     "ask": []
