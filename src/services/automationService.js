@@ -100,17 +100,16 @@ export async function sendCompletionNotification(data) {
       event: 'form_completed',
       timestamp: new Date().toISOString(),
       data: {
+        candidate_id: data.candidate_id, // UUID da estrutura normalizada
         email: data.email,
         full_name: data.full_name || '',
         phone: data.phone || '',
         language: data.language || 'pt-BR',
-        selected_depot: data.selected_depot || '',
+        depot_location: data.depot_location || data.selected_depot || '',
         depot_code: data.depot_code || '',
         created_at: data.created_at || new Date().toISOString(),
         completed_at: data.completed_at || new Date().toISOString(),
         all_documents_uploaded: true,
-        has_driving_licence: !!data.driving_licence_front_url,
-        has_profile_photo: !!data.profile_photo_url,
         employment_status: data.employment_status || ''
       },
       metadata: {

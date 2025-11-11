@@ -10,7 +10,8 @@ import {
   updateDocumentStatus
 } from '../components/DocumentStatus.js'
 import { createFileUpload } from '../components/FileUpload.js'
-import { saveFormStep, uploadFile } from '../services/supabaseService.js'
+import { uploadCandidateDocument, updateCandidateFields } from '../services/supabaseService.js'
+import { sendCompletionNotification } from '../services/automationService.js'
 import { DOCUMENT_TYPES, DOCUMENT_LABELS, VALIDATION, STORAGE_CONFIG } from '../config/constants.js'
 
 /**
@@ -144,10 +145,12 @@ export function renderDocumentsUploadPage(container, options = {}) {
     confirmUploadBtn.textContent = t(lang, 'system.saving')
 
     try {
-      // Upload para Supabase Storage
-      const filePath = `${STORAGE_CONFIG.PATHS.DOCUMENTS}/${formData.email}/${currentDocType}_${Date.now()}.${currentFile.name.split('.').pop()}`
-
-      const uploadResult = await uploadFile(currentFile, filePath)
+      // Upload para Supabase Storage + salvar em candidate_documents
+      const uploadResult = await uploadCandidateDocument(
+        formData.candidateId,
+        currentDocType,
+        currentFile
+      )
 
       if (!uploadResult.success) {
         throw new Error(uploadResult.error || 'Upload failed')
@@ -155,7 +158,7 @@ export function renderDocumentsUploadPage(container, options = {}) {
 
       const docUrl = uploadResult.url
 
-      // Atualizar estado
+      // Atualizar estado local
       documentsState[currentDocType] = {
         url: docUrl,
         uploaded_at: new Date().toISOString(),
@@ -172,16 +175,13 @@ export function renderDocumentsUploadPage(container, options = {}) {
         onRemove: () => handleRemove(currentDocType)
       })
 
-      // Salvar no Supabase
-      await saveFormStep(formData.email, 11, {
-        documents: documentsState
-      })
+      console.log(`✅ Documento ${currentDocType} salvo no Supabase`)
 
       checkCanContinue()
       closeModal()
 
     } catch (error) {
-      console.error('Error uploading document:', error)
+      console.error('❌ Erro ao fazer upload de documento:', error)
       alert(t(lang, 'validation.uploadFailed'))
       confirmUploadBtn.disabled = false
       confirmUploadBtn.textContent = t(lang, 'documentsUpload.uploadButton')
@@ -252,18 +252,39 @@ export function renderDocumentsUploadPage(container, options = {}) {
     continueBtn.textContent = t(lang, 'system.saving')
 
     try {
-      // Marcar formulário como completo
-      await saveFormStep(formData.email, 11, {
-        documents: documentsState,
+      // Marcar candidato como completo
+      await updateCandidateFields(formData.candidateId, {
+        is_completed: true,
         completed_at: new Date().toISOString(),
-        is_completed: true
+        status: 'completed'
       })
+
+      console.log('✅ Step 11 (DocumentsUpload) - Candidato marcado como completo')
+
+      // 🔔 ENVIAR NOTIFICAÇÃO N8N DE CONCLUSÃO
+      try {
+        await sendCompletionNotification({
+          candidate_id: formData.candidateId,
+          email: formData.email,
+          full_name: formData.fullName,
+          phone: formData.phone,
+          language: formData.language || 'en',
+          depot_location: formData.selectedDepot,
+          depot_code: formData.depotCode,
+          completed_at: new Date().toISOString()
+        })
+
+        console.log('✅ Notificação n8n de conclusão enviada')
+      } catch (n8nError) {
+        console.warn('⚠️ Erro ao enviar notificação n8n (não crítico):', n8nError.message)
+        // Não bloquear o fluxo se n8n falhar
+      }
 
       if (onNext) {
         onNext({ documents: documentsState })
       }
     } catch (error) {
-      console.error('Error completing form:', error)
+      console.error('❌ Erro ao completar formulário:', error)
       alert(t(lang, 'system.error'))
       continueBtn.disabled = false
       continueBtn.textContent = t(lang, 'documentsUpload.continueButton')
