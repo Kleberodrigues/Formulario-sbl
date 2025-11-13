@@ -27,7 +27,15 @@
       "Bash(git mv:*)",
       "Bash(git rm:*)",
       "Bash(node scripts/testing/test-form-e2e.js:*)",
-      "Bash(npm run test:n8n:*)"
+      "Bash(npm run test:n8n:*)",
+      "Bash(npm run test:e2e:*)",
+      "Bash(findstr:*)",
+      "Bash(curl:*)",
+      "Bash(node scripts/testing/test-routing-fix.js:*)",
+      "Bash(node -e:*)",
+      "Bash(node scripts/testing/validate-document-types.js:*)",
+      "Bash(node scripts/testing/verify-supabase-n8n.js:*)",
+      "Bash(timeout 30 bash:*)"
     ],
     "deny": [],
     "ask": []

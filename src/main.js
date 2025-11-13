@@ -32,6 +32,25 @@ const appState = {
 }
 
 /**
+ * Verificar se deve retomar progresso salvo
+ * @returns {boolean}
+ */
+function shouldResumeProgress() {
+  const urlParams = new URLSearchParams(window.location.search)
+  return urlParams.has('resume')
+}
+
+/**
+ * Limpar progresso do formulário
+ */
+function clearFormProgress() {
+  localStorage.removeItem('sbl_form_data')
+  localStorage.removeItem('sbl_session_id')
+  // Preservar sbl_abandonment para tracking (não remover)
+  console.log('🧹 Progresso do formulário limpo - iniciando do zero')
+}
+
+/**
  * Inicializar aplicação
  */
 async function initApp() {
@@ -45,8 +64,16 @@ async function initApp() {
     console.warn('VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY necessários.')
   }
 
-  // Carregar dados salvos (se houver)
-  loadSavedProgress()
+  // Verificar se deve retomar progresso ou começar do zero
+  if (shouldResumeProgress()) {
+    console.log('📂 Parâmetro ?resume detectado - carregando progresso salvo')
+    loadSavedProgress()
+  } else {
+    console.log('🆕 Iniciando formulário do zero (Step 1)')
+    clearFormProgress()
+    appState.currentStep = STEPS.WELCOME
+    appState.formData = {}
+  }
 
   // Registrar listener para mudança de idioma
   onLanguageChange((newLang, oldLang) => {
@@ -211,6 +238,7 @@ function renderContactStep(container) {
       appState.formData.fullName = data.fullName
       appState.formData.email = data.email
       appState.formData.phone = data.phone
+      appState.formData.candidateId = data.candidateId  // ← FIX: Propagar candidateId
 
       // Avançar para próximo step
       goToNextStep()

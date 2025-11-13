@@ -73,7 +73,7 @@ export const LANGUAGE_OPTIONS = [
 ]
 
 // Idioma padrão
-export const DEFAULT_LANGUAGE = LANGUAGES.PT_BR
+export const DEFAULT_LANGUAGE = LANGUAGES.EN
 
 // Depósitos disponíveis (organizados por categoria)
 export const DEPOTS = [

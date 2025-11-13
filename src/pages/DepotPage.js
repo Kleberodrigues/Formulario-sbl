@@ -6,7 +6,6 @@
 import { t } from '../utils/translations.js'
 import { createMapboxDepotSelector, createDepotList, isMapboxAvailable } from '../components/MapboxDepotSelector.js'
 import { createDepotDropdown, updateDepotDropdown } from '../components/DepotDropdown.js'
-import { saveFormStep } from '../services/supabaseService.js'
 import { DEPOTS } from '../config/constants.js'
 
 /**

@@ -5,7 +5,6 @@
 
 import { t } from '../utils/translations.js'
 import { validateMessage } from '../utils/validators.js'
-import { saveFormStep } from '../services/supabaseService.js'
 
 /**
  * Renderizar página de chat

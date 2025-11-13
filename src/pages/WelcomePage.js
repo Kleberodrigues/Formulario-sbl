@@ -7,7 +7,6 @@ import { createFormStep, createStepContent, createStepButtons, setButtonLoading 
 import { createLanguageSelector } from '../components/LanguageSelector.js'
 import { STEPS } from '../config/constants.js'
 import { t, getSavedLanguage, saveLanguage } from '../utils/translations.js'
-import { saveFormStep } from '../services/supabaseService.js'
 
 /**
  * Criar página de boas-vindas (Step 1)
